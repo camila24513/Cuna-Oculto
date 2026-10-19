@@ -1,0 +1,39 @@
+.categorias-container {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.grid-categorias {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  padding: 0 1rem;
+}
+
+.categoria-card {
+  padding: 1.8rem 1rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.categoria-card h3 {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.categoria-card p {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
