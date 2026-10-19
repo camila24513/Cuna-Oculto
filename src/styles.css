@@ -1,1 +1,87 @@
-/* You can add global styles to this file, and also import other style files */
+/* --- Variables Globales de Colores y Estilos --- */
+:root {
+  --color-bg-dark: #1e252d;         /* Fondo de paneles / laterales */
+  --color-bg-card: rgba(30, 37, 45, 0.85); /* Tarjeta estilo glassmorphism */
+  --color-accent-blue: #00bcd4;     /* Cian/Azul brillante para acentos */
+  --color-text-light: #ffffff;      /* Texto principal */
+  --color-text-muted: #b0bec5;      /* Texto secundario */
+
+  --font-family-title: 'Cinzel', serif;
+  --font-family-body: 'Roboto', sans-serif;
+
+  --border-radius-card: 12px;
+  --border-radius-button: 25px;
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* --- Estilos Reutilizables --- */
+
+/* Tarjetas estilo Glassmorphism Místico */
+.card-misterio {
+  background: var(--color-bg-card);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: var(--border-radius-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow-glass);
+  color: var(--color-text-light);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-misterio:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 188, 212, 0.25); /* Resplandor suave al pasar el mouse */
+}
+
+/* Botón con borde punteado/sombra tipo mockup */
+.btn-misterio {
+  background-color: #ffffff;
+  color: #1e252d;
+  border: 2px dashed #1e252d;
+  border-radius: var(--border-radius-button);
+  padding: 12px 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-misterio:hover {
+  background-color: var(--color-accent-blue);
+  color: #ffffff;
+}
+
+:root {
+  --color-bg-dark: #1e252d;
+  --color-bg-card: rgba(30, 37, 45, 0.85);
+  --color-accent-blue: #00bcd4;
+  --color-text-light: #ffffff;
+  --color-text-muted: #b0bec5;
+  --border-radius-card: 12px;
+  --border-radius-button: 25px;
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-light);
+}
+
+/* Tarjeta mística con efecto de cristal (Glassmorphism) */
+.card-misterio {
+  background: var(--color-bg-card);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: var(--border-radius-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow-glass);
+  color: var(--color-text-light);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-misterio:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 188, 212, 0.25);
+}

@@ -1,0 +1,67 @@
+.home-container {
+  min-height: 100vh;
+  padding: 2rem;
+  color: var(--color-text-light);
+}
+
+.hero-section {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.titulo-principal {
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+}
+
+.subtitulo {
+  font-size: 1.2rem;
+  color: var(--color-text-muted);
+}
+
+.destacado-section {
+  display: flex;
+  justify-content: center;
+}
+
+.tarjeta-destacada {
+  display: flex;
+  max-width: 750px;
+  overflow: hidden;
+  padding: 1.5rem;
+  gap: 1.5rem;
+}
+
+.card-img {
+  width: 220px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.card-info h2 {
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  font-size: 1.6rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.card-info p {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: #d1d5db;
+}
+
+.rating {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stars {
+  color: #fbc02d;
+  font-size: 1.2rem;
+}
