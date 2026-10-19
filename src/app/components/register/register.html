@@ -1,0 +1,44 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="brand-header">
+      <h2>CUNA OCULTO</h2>
+      <p>Únete a la comunidad de relatos del CBTis 75</p>
+    </div>
+
+    <div class="tab-group">
+      <button class="tab-btn" routerLink="/login">Iniciar Sesión</button>
+      <button class="tab-btn active">Crea tu cuenta</button>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+      <div class="form-control">
+        <label for="nombre">Nombre Completo</label>
+        <input id="nombre" type="text" formControlName="nombre" placeholder="Tu nombre">
+      </div>
+
+      <div class="form-control">
+        <label for="email">Correo Electrónico</label>
+        <input id="email" type="email" formControlName="email" placeholder="ejemplo@correo.com">
+      </div>
+
+      <div class="form-control">
+        <label for="password">Contraseña</label>
+        <input id="password" type="password" formControlName="password" placeholder="Mínimo 6 caracteres">
+      </div>
+
+      <div class="form-control">
+        <label for="confirmPassword">Confirmar Contraseña</label>
+        <input id="confirmPassword" type="password" formControlName="confirmPassword" placeholder="Repite tu contraseña">
+        <span class="error-text" *ngIf="registerForm.hasError('mismatch') && registerForm.get('confirmPassword')?.touched">
+          Las contraseñas no coinciden.
+        </span>
+      </div>
+
+      <div class="alert error" *ngIf="mensajeError">{{ mensajeError }}</div>
+
+      <button type="submit" class="btn-primary" [disabled]="cargando">
+        {{ cargando ? 'Creando cuenta...' : 'Registrarme' }}
+      </button>
+    </form>
+  </div>
+</div>
