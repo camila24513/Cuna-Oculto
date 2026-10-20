@@ -3,8 +3,10 @@ import { BehaviorSubject } from 'rxjs';
 import { AuthContract } from './auth.contract';
 import { Usuario } from '../models/usuario.model';
 
-@Injectable()
-export class AuthMockService extends AuthContract {
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthMockService implements AuthContract {
   private readonly _usuario = new BehaviorSubject<Usuario | null>(null);
   readonly usuario$ = this._usuario.asObservable();
 

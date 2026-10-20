@@ -8,7 +8,7 @@ import { AuthMockService } from '../../services/auth.mock.service';
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
-  templateUrl: './login.component.html',
+  templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
 export class LoginComponent {
