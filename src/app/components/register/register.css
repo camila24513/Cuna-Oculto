@@ -3,8 +3,8 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.85)), 
-              url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000') no-repeat center center/cover;
+  background: linear-gradient(rgba(48, 47, 47, 0.75), rgba(0, 0, 0, 0.85)),
+              url('/imagen/fondo.jpg') no-repeat center center/cover;
   padding: 20px;
 }
 
