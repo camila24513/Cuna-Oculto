@@ -9,5 +9,9 @@ export const routes: Routes = [
   { 
     path: 'register', 
     loadComponent: () => import('./components/register/register').then(m => m.RegisterComponent) 
-  }
+  },
+  {
+  path: 'mis-historias',
+  loadComponent: () => import('./components/mis-historias/mis-historias').then(m => m.MisHistoriasComponent)
+}
 ];

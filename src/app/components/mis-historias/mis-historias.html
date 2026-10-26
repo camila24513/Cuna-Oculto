@@ -1,0 +1,82 @@
+<div class="contenedor-principal">
+  <h1 class="titulo-seccion">← EDITA TU HISTORIA</h1>
+
+
+  <div class="stepper">
+    <div class="paso" [class.activo]="pasoActual >= 1">
+      <span class="circulo">1</span> Formulario
+    </div>
+    <div class="linea"></div>
+    <div class="paso" [class.activo]="pasoActual >= 2">
+      <span class="circulo">2</span> Filtro
+    </div>
+    <div class="linea"></div>
+    <div class="paso" [class.activo]="pasoActual >= 3">
+      <span class="circulo">3</span> Revisión
+    </div>
+    <div class="linea"></div>
+    <div class="paso" [class.activo]="pasoActual >= 4">
+      <span class="circulo">4</span> Éxito
+    </div>
+  </div>
+
+  <div class="contenido-grid">
+
+    <div class="card-formulario" *ngIf="pasoActual === 1">
+      <h3>1. Formulario de carga</h3>
+      <form [formGroup]="historiaForm" (ngSubmit)="enviarHistoria()">
+        
+        <div class="campo">
+          <label>Título del relato *</label>
+          <input type="text" formControlName="titulo" placeholder="Ej. La Casa de los Lamentos" />
+        </div>
+
+        <div class="campo">
+          <label>Categoría *</label>
+          <select formControlName="categoria">
+            <option value="" disabled selected>Selecciona una categoría</option>
+            <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label>Ubicación *</label>
+          <input type="text" formControlName="ubicacion" placeholder="Ej. Calle Hidalgo #12" />
+        </div>
+
+        <div class="campo">
+          <label>Descripción *</label>
+          <textarea formControlName="descripcion" rows="4" maxlength="2000" placeholder="Escribe aquí tu historia..."></textarea>
+          <div class="contador">{{ contadorCaracteres }}/2000</div>
+        </div>
+
+        <div class="acciones-archivos">
+          <label class="btn-adjuntar">
+            📷 Adjuntar foto
+            <input type="file" (change)="onFileSelected($event, 'foto')" accept="image/*" hidden />
+          </label>
+          <label class="btn-adjuntar">
+            🎙️ Adjuntar audio
+            <input type="file" (change)="onFileSelected($event, 'audio')" accept="audio/*" hidden />
+          </label>
+        </div>
+
+        <button type="submit" class="btn-enviar" [disabled]="historiaForm.invalid">
+          Enviar historia
+        </button>
+      </form>
+    </div>
+
+    <div class="card-filtro">
+      <h3>2. Filtro automático</h3>
+      <div class="alerta-box">
+        
+      </div>
+      <div class="tags-filtro">
+        <span class="tag">groserías</span>
+        <span class="tag">insultos</span>
+        <span class="tag">amenazas</span>
+      </div>
+    </div>
+  </div>
+</div>
