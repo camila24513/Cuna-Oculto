@@ -1,20 +1,38 @@
 <aside class="sidebar">
+  <!-- Logo Cuna Oculto -->
   <div class="sidebar-logo">
-    <h2>🔔 Leyendas</h2>
+    <img src="assets/imagen/fondo.jpg" alt="Cuna Oculto Logo" class="logo-img" onerror="this.src='favicon.ico'">
+    <h1 class="logo-title">CUNA<br><span>OCULTO</span></h1>
   </div>
+
+  <!-- Menú de Navegación con Iconos -->
   <nav class="sidebar-nav">
-    <a routerLink="/inicio" routerLinkActive="active">
-      <span>🏠</span> Inicio
+    <a routerLink="/inicio" routerLinkActive="active" class="nav-item">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+      </svg>
+      <span>INICIO</span>
     </a>
-    <a routerLink="/categorias" routerLinkActive="active">
-      <span>📁</span> Categorías
+
+    <a routerLink="/categorias" routerLinkActive="active" class="nav-item">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm6 6h4v-4h-4v4z"/>
+      </svg>
+      <span>CATEGORÍAS</span>
     </a>
-    <a routerLink="/mis-historias" routerLinkActive="active">
-      <span>✍️</span> Mis Historias
+
+    <a routerLink="/mis-historias" routerLinkActive="active" class="nav-item">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+      </svg>
+      <span>MIS HISTORIAS</span>
     </a>
-    <a routerLink="/perfil" routerLinkActive="active">
-      <span>👤</span> Perfil
+
+    <a routerLink="/perfil" routerLinkActive="active" class="nav-item">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+      </svg>
+      <span>PERFIL</span>
     </a>
   </nav>
 </aside>
-
