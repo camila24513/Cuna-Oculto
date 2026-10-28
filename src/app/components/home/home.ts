@@ -2,11 +2,14 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Leyenda, LEYENDAS_MOCK } from '../../models/leyenda.model';
+// 1. Importa el componente de categorías desde su carpeta
+import { CategoriesCard} from '../categories-card/categories-card';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  // 2. Agrega CategoriesCardComponent dentro del arreglo imports
+  imports: [CommonModule, CategoriesCard],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
@@ -56,21 +59,18 @@ export class HomeComponent implements OnInit {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Zoom sutil
     const scale = 1 + progress * 0.15;
     ctx.save();
     ctx.scale(scale, scale);
     ctx.drawImage(img, 0, 0, canvas.width / scale, canvas.height / scale);
     ctx.restore();
 
-    // Fondo degradado para texto
     const gradient = ctx.createLinearGradient(0, canvas.height * 0.4, 0, canvas.height);
     gradient.addColorStop(0, 'rgba(0,0,0,0)');
     gradient.addColorStop(1, 'rgba(0,0,0,0.9)');
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Textos
     ctx.fillStyle = '#FFFFFF';
     ctx.font = 'bold 22px sans-serif';
     ctx.textAlign = 'center';
