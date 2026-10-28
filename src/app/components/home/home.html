@@ -1,11 +1,12 @@
 <div class="home-container">
   <main class="main-content">
+    <!-- Banner y Encabezado Original -->
     <header class="hero-section">
-      <h1 class="titulo-principal">Historias que no todos conocemos q</h1>
+      <h1 class="titulo-principal">Historias que no todos conocemos</h1>
       <p class="subtitulo">Descubre las leyendas, mitos y misterios de Dolores Hidalgo</p>
     </header>
 
-    <!-- Tarjeta Destacada del Mes -->
+    <!-- Tarjeta Destacada del Mes Original -->
     <section class="destacado-section">
       <div class="card-misterio tarjeta-destacada">
         <img src="images/callejon-milagros.jpg" alt="Callejón de los Milagros" class="card-img" />
@@ -23,7 +24,54 @@
       </div>
     </section>
 
-    <!-- Componente de Categorías insertado abajo -->
+    <!-- Novedad: Sección del Ranking Semanal + Generador de Video -->
+    <section class="ranking-section">
+      <h2>🏆 Ranking Semanal de Leyendas</h2>
+
+      <div class="ranking-grid">
+        <!-- 1er Lugar -->
+        <article class="card rank-1" *ngIf="leyendaTop1" (click)="verDetalle(leyendaTop1.id)">
+          <div class="badge">🥇 1° Lugar</div>
+          <img [src]="leyendaTop1.imagenUrl" [alt]="leyendaTop1.titulo">
+          <div class="card-body">
+            <h3>{{ leyendaTop1.titulo }}</h3>
+            <p>📍 {{ leyendaTop1.lugar }}</p>
+            <p>🔥 {{ leyendaTop1.votos }} votos</p>
+            <button (click)="abrirGeneradorVideo(leyendaTop1, $event)" class="btn-video">
+              🎬 Generar Video Promo
+            </button>
+          </div>
+        </article>
+
+        <!-- 2do y 3er Lugar -->
+        <div class="secondary-ranks">
+          <article *ngFor="let item of leyendasSecundarias" class="card rank-sub" (click)="verDetalle(item.id)">
+            <div class="badge">{{ item.rank === 2 ? '🥈 2° Lugar' : '🥉 3° Lugar' }}</div>
+            <img [src]="item.imagenUrl" [alt]="item.titulo">
+            <div class="card-body">
+              <h3>{{ item.titulo }}</h3>
+              <p>🔥 {{ item.votos }} votos</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Componente de Categorías insertado abajo (Original) -->
     <app-categories-card></app-categories-card>
+
+    <!-- Modal Canvas Generator (Invisible hasta presionar el botón) -->
+    <div class="modal-video" *ngIf="mostrarModalVideo">
+      <div class="modal-content">
+        <h3>Generador de Reel Animado</h3>
+        <canvas #videoCanvas width="360" height="640"></canvas>
+        <div class="modal-actions">
+          <button (click)="iniciarGrabacionVideo()" [disabled]="grabando" class="btn-primary">
+            {{ grabando ? '🎥 Generando...' : '▶️ Descargar Video' }}
+          </button>
+          <button (click)="cerrarModal()" class="btn-close">Cerrar</button>
+        </div>
+      </div>
+    </div>
   </main>
 </div>
