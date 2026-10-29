@@ -1,13 +1,10 @@
 import { Routes } from '@angular/router';
+import { CategoriesCardComponent } from './components/categories-card/categories-card';
+import { ListadoHistoriasComponent } from './pages/listado-historias/listado-historias';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { 
-    path: 'login', 
-    loadComponent: () => import('./components/login/login').then(m => m.LoginComponent) 
-  },
-  { 
-    path: 'register', 
-    loadComponent: () => import('./components/register/register').then(m => m.RegisterComponent) 
-  }
+  { path: 'categorias', component: CategoriesCardComponent },
+  { path: 'categorias/:nombre', component: ListadoHistoriasComponent },
+  { path: 'historias', component: ListadoHistoriasComponent },
+  { path: '', redirectTo: 'categorias', pathMatch: 'full' }
 ];
