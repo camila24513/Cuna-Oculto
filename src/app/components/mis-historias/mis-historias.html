@@ -1,30 +1,31 @@
 <div class="contenedor-principal">
-  <h1 class="titulo-seccion">← EDITA TU HISTORIA</h1>
+  <h1 class="titulo-seccion">← MIS HISTORIAS</h1>
 
-
+  <!-- Stepper Dinámico -->
   <div class="stepper">
     <div class="paso" [class.activo]="pasoActual >= 1">
       <span class="circulo">1</span> Formulario
     </div>
-    <div class="linea"></div>
+    <div class="linea" [class.activo]="pasoActual >= 2"></div>
     <div class="paso" [class.activo]="pasoActual >= 2">
       <span class="circulo">2</span> Filtro
     </div>
-    <div class="linea"></div>
+    <div class="linea" [class.activo]="pasoActual >= 3"></div>
     <div class="paso" [class.activo]="pasoActual >= 3">
       <span class="circulo">3</span> Revisión
     </div>
-    <div class="linea"></div>
+    <div class="linea" [class.activo]="pasoActual >= 4"></div>
     <div class="paso" [class.activo]="pasoActual >= 4">
       <span class="circulo">4</span> Éxito
     </div>
   </div>
 
-  <div class="contenido-grid">
-
-    <div class="card-formulario" *ngIf="pasoActual === 1">
+  <!-- VISTA PASO 1 Y 2: Formulario y Panel de Moderación -->
+  <div class="contenido-grid" *ngIf="pasoActual <= 2">
+    <!-- Columna Izquierda: Formulario -->
+    <div class="card-formulario">
       <h3>1. Formulario de carga</h3>
-      <form [formGroup]="historiaForm" (ngSubmit)="enviarHistoria()">
+      <form [formGroup]="historiaForm" (ngSubmit)="irARevision()">
         
         <div class="campo">
           <label>Título del relato *</label>
@@ -52,31 +53,114 @@
 
         <div class="acciones-archivos">
           <label class="btn-adjuntar">
-            📷 Adjuntar foto
+            📷 {{ nombreImagenSeleccionada ? nombreImagenSeleccionada : 'Adjuntar foto' }}
             <input type="file" (change)="onFileSelected($event, 'foto')" accept="image/*" hidden />
           </label>
           <label class="btn-adjuntar">
-            🎙️ Adjuntar audio
+            🎙️ {{ nombreAudioSeleccionado ? nombreAudioSeleccionado : 'Adjuntar audio' }}
             <input type="file" (change)="onFileSelected($event, 'audio')" accept="audio/*" hidden />
           </label>
         </div>
 
-        <button type="submit" class="btn-enviar" [disabled]="historiaForm.invalid">
-          Enviar historia
+        <button type="submit" class="btn-enviar" [disabled]="!esFormularioTotalmenteValido">
+          Avanzar a Revisión
         </button>
       </form>
     </div>
 
+    <!-- Columna Derecha: Panel de Filtro -->
     <div class="card-filtro">
       <h3>2. Filtro automático</h3>
-      <div class="alerta-box">
-        
+
+      <!-- Alerta Texto -->
+      <div class="alerta-box exito" *ngIf="evaluadoTexto && resultadoFiltro.esValido">
+        ✅ <strong>Texto apropiado:</strong> No se detectaron palabras no permitidas.
       </div>
-      <div class="tags-filtro">
-        <span class="tag">groserías</span>
-        <span class="tag">insultos</span>
-        <span class="tag">amenazas</span>
+
+      <div class="alerta-box error" *ngIf="evaluadoTexto && !resultadoFiltro.esValido">
+        ⚠️ <strong>Atención en texto:</strong> Tu historia contiene lenguaje no permitido.
+        <div class="palabras-detectadas">
+          <span class="tag-error" *ngFor="let palabra of resultadoFiltro.palabrasDetectadas">
+            {{ palabra }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Alerta Imagen -->
+      <div class="alerta-box info" *ngIf="cargandoImagen">
+        🔍 <strong>Escaneando imagen...</strong> Analizando contenido con Sightengine API.
+      </div>
+
+      <div class="alerta-box exito" *ngIf="resultadoImagen && resultadoImagen.esApta">
+        🖼️ <strong>Imagen aprobada:</strong> {{ resultadoImagen.mensaje }}
+      </div>
+
+      <div class="alerta-box error" *ngIf="resultadoImagen && !resultadoImagen.esApta">
+        🚫 <strong>Imagen rechazada:</strong> {{ resultadoImagen.mensaje }}
+      </div>
+
+      <div class="info-adicional">
+        <p>Categorías monitoreadas por IA y Regex:</p>
+        <div class="tags-filtro">
+          <span class="tag">groserías</span>
+          <span class="tag">violencia / gore (&lt;0.5)</span>
+          <span class="tag">contenido no apto</span>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+  <!-- VISTA PASO 3: Revisión de Historia -->
+  <div class="card-revision" *ngIf="pasoActual === 3">
+    <h3>3. Revisión de la historia</h3>
+    <p class="subtitulo-paso">Confirma los datos antes de publicar tu relato en Cuna Oculto:</p>
+
+    <div class="resumen-box">
+      <div class="dato-grupo">
+        <span class="label">Título:</span>
+        <span class="valor">{{ historiaForm.get('titulo')?.value }}</span>
+      </div>
+      <div class="dato-grupo">
+        <span class="label">Categoría:</span>
+        <span class="valor">{{ historiaForm.get('categoria')?.value }}</span>
+      </div>
+      <div class="dato-grupo">
+        <span class="label">Ubicación:</span>
+        <span class="valor">{{ historiaForm.get('ubicacion')?.value }}</span>
+      </div>
+      <div class="dato-grupo">
+        <span class="label">Descripción:</span>
+        <p class="valor-texto">{{ historiaForm.get('descripcion')?.value }}</p>
+      </div>
+      <div class="dato-grupo" *ngIf="nombreImagenSeleccionada">
+        <span class="label">Imagen adjunta:</span>
+        <span class="valor">📷 {{ nombreImagenSeleccionada }}</span>
+      </div>
+      <div class="dato-grupo" *ngIf="nombreAudioSeleccionado">
+        <span class="label">Audio adjunto:</span>
+        <span class="valor">🎙️ {{ nombreAudioSeleccionado }}</span>
+      </div>
+    </div>
+
+    <div class="acciones-revision">
+      <button type="button" class="btn-secundario" (click)="regresarAFormulario()">
+         Modificar datos
+      </button>
+      <button type="button" class="btn-enviar" (click)="confirmarEnvioFinal()">
+         Confirmar y publicar historia
+      </button>
+    </div>
+  </div>
+
+  <!-- VISTA PASO 4: Pantalla de Éxito -->
+  <div class="card-exito" *ngIf="pasoActual === 4">
+    <!-- Reemplazamos <div class="icono-exito">🎉</div> por esto: -->
+    <img src="gato-gracias.jpg" alt="Éxito" class="imagen-exito" />
+    
+    <h2>¡Gracias por compartir tu historia!</h2>
+    <p>Tu relato ha superado todas las validaciones de moderación y ya forma parte de la colección de mitos y leyendas de <strong>Cuna Oculto</strong>.</p>
+    
+    <button type="button" class="btn-enviar" (click)="reiniciarFormulario()">
+      ➕ Publicar otra historia
+    </button>
+  </div>
