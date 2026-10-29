@@ -1,0 +1,37 @@
+<div class="listado-container">
+  <div class="header-seccion">
+    <h2>{{ categoriaSeleccionada || 'Todas las Leyendas' }}</h2>
+    <p>Explora y busca entre los relatos y mitos registrados.</p>
+  </div>
+
+  <!-- Buscador dinámico -->
+  <div class="buscador-box">
+    <input 
+      type="text" 
+      [(ngModel)]="textoBusqueda" 
+      placeholder="🔎 Buscar por título o contenido..." 
+      class="input-buscador"
+    />
+  </div>
+
+  <!-- Lista de leyendas filtradas -->
+  <div class="grid-historias" *ngIf="leyendasFiltradas.length > 0; else sinResultados">
+    <div *ngFor="let leyenda of leyendasFiltradas" class="card-historia">
+      <div class="card-img">
+        <img [src]="leyenda.imagenUrl" [alt]="leyenda.titulo">
+      </div>
+      <div class="card-body">
+        <span class="badge-categoria">{{ leyenda.categoria }}</span>
+        <h3>{{ leyenda.titulo }}</h3>
+        <p>{{ leyenda.resumen }}</p>
+        <a [routerLink]="['/leyenda', leyenda.id]" class="btn-detalle">Leer Historia</a>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #sinResultados>
+    <div class="mensaje-vacio">
+      <p>No se encontraron historias que coincidan con tu búsqueda.</p>
+    </div>
+  </ng-template>
+</div>
