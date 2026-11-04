@@ -47,17 +47,17 @@
 
         <div class="campo">
           <label>Descripción *</label>
-          <textarea formControlName="descripcion" rows="4" maxlength="2000" placeholder="Escribe aquí tu historia..."></textarea>
-          <div class="contador">{{ contadorCaracteres }}/2000</div>
+          <textarea formControlName="descripcion" rows="4" maxlength="10000" placeholder="Escribe aquí tu historia..."></textarea>
+          <div class="contador">{{ contadorCaracteres }}/10000</div>
         </div>
 
         <div class="acciones-archivos">
           <label class="btn-adjuntar">
-            📷 {{ nombreImagenSeleccionada ? nombreImagenSeleccionada : 'Adjuntar foto' }}
+             {{ nombreImagenSeleccionada ? nombreImagenSeleccionada : 'Adjuntar foto' }}
             <input type="file" (change)="onFileSelected($event, 'foto')" accept="image/*" hidden />
           </label>
           <label class="btn-adjuntar">
-            🎙️ {{ nombreAudioSeleccionado ? nombreAudioSeleccionado : 'Adjuntar audio' }}
+             {{ nombreAudioSeleccionado ? nombreAudioSeleccionado : 'Adjuntar audio' }}
             <input type="file" (change)="onFileSelected($event, 'audio')" accept="audio/*" hidden />
           </label>
         </div>
@@ -88,7 +88,7 @@
 
       <!-- Alerta Imagen -->
       <div class="alerta-box info" *ngIf="cargandoImagen">
-        🔍 <strong>Escaneando imagen...</strong> Analizando contenido con Sightengine API.
+         <strong>Escaneando imagen...</strong> Analizando contenido con Sightengine API.
       </div>
 
       <div class="alerta-box exito" *ngIf="resultadoImagen && resultadoImagen.esApta">
@@ -161,6 +161,6 @@
     <p>Tu relato ha superado todas las validaciones de moderación y ya forma parte de la colección de mitos y leyendas de <strong>Cuna Oculto</strong>.</p>
     
     <button type="button" class="btn-enviar" (click)="reiniciarFormulario()">
-      ➕ Publicar otra historia
+      Publicar otra historia
     </button>
   </div>

@@ -39,7 +39,7 @@ export class MisHistoriasComponent {
       titulo: ['', [Validators.required, Validators.minLength(5)]],
       categoria: ['', Validators.required],
       ubicacion: ['', Validators.required],
-      descripcion: ['', [Validators.required, Validators.maxLength(2000)]],
+      descripcion: ['', [Validators.required, Validators.maxLength(10000)]],
       imagen: [null],
       audio: [null]
     });
