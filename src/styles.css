@@ -1,1 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Montserrat:wght@400;700&display=swap');
+
+:root {
+  --color-bg-main: #1a232a;
+  --color-sidebar: #2f3e46;
+  --color-card-bg: #354751;
+  --color-text: #ffffff;
+  --color-accent: #00bcd4;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-bg-main);
+  color: var(--color-text);
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Tarjeta mística como tu boceto */
+.card-misterio {
+  background-color: var(--color-card-bg);
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  color: var(--color-text);
+  padding: 1.5rem;
+}
