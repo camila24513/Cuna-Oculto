@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { CategoriesCardComponent } from './components/categories-card/categories-card';
+import { CategoriesCardComponent } from './components/categories/categories-card';
 import { ListadoHistoriasComponent } from './pages/listado-historias/listado-historias';
 
 export const routes: Routes = [
