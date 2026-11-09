@@ -1,36 +1,15 @@
-
-import {
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Leyenda, LEYENDAS_MOCK } from '../../models/leyenda.model';
-<<<<<<< HEAD
-// 1. Importa el componente de categorías desde su carpeta
-import { CategoriesCardComponent } from '../categories-card/categories-card';
-=======
-
-// Importación del componente de categorías
-import {CategoriesCardComponent} from '../categories/categories-card';
->>>>>>> 08332de6ff53a196a61f5e562b91481c6f150bef
+import { CategoriesCardComponent } from '../categories/categories-card';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-<<<<<<< HEAD
-  // 2. Agrega CategoriesCardComponent dentro del arreglo imports
   imports: [CommonModule, CategoriesCardComponent],
-=======
-  imports: [
-    CommonModule,
-    CategoriesCardComponent
-  ],
->>>>>>> 08332de6ff53a196a61f5e562b91481c6f150bef
   templateUrl: './home.html',
-  styleUrl: './home.css'
+  styleUrls: ['./home.css']
 })
 export class HomeComponent implements OnInit {
   @ViewChild('videoCanvas')
