@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Leyenda, LEYENDAS_MOCK } from '../../models/leyenda.model';
 // 1. Importa el componente de categorías desde su carpeta
-import { CategoriesCard} from '../categories-card/categories-card';
+import { CategoriesCardComponent } from '../categories-card/categories-card';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   // 2. Agrega CategoriesCardComponent dentro del arreglo imports
-  imports: [CommonModule, CategoriesCard],
+  imports: [CommonModule, CategoriesCardComponent],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })

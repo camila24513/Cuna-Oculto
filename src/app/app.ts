@@ -1,12 +1,13 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { SidebarComponent } from './components/sidebar/sidebar';
 
 @Component({
-  imports: [RouterOutlet],
   selector: 'app-root',
-  styleUrl: './app.css',
+  standalone: true,
+  imports: [CommonModule, RouterOutlet, SidebarComponent],
   templateUrl: './app.html',
+  styleUrls: ['./app.css']
 })
-export class App {
-  protected readonly title = signal('mi-app');
-}
+export class App { }

@@ -1,19 +1,24 @@
 <div class="categorias-container">
-  <h1 class="titulo">Categorías de Leyendas</h1>
-  <p class="subtitulo">Explora los relatos según su origen o temática.</p>
+  <!-- Barra de encabezado superior -->
+  <header class="top-header">
+    <h1 class="header-title">CUNA OCULTO</h1>
+  </header>
 
-  <div class="grid-categorias">
-    <div 
-      *ngFor="let cat of categorias" 
-      class="card-categoria" 
-      [routerLink]="['/categorias', cat.nombre]"
-    >
-      <div class="img-wrapper">
-        <img [src]="cat.img" [alt]="cat.nombre">
-      </div>
-      <div class="card-info">
-        <h3>{{ cat.nombre }}</h3>
-        <p>{{ cat.desc }}</p>
+  <div class="main-content">
+    <div class="titulo-seccion">
+      <h2>CATEGORÍAS:</h2>
+    </div>
+
+    <div class="grid-categorias">
+      <div *ngFor="let cat of categorias" class="card-categoria">
+        <div class="img-wrapper">
+          <img [src]="cat.img" [alt]="cat.nombre">
+        </div>
+        <div class="card-info">
+          <h3>{{ cat.nombre }}</h3>
+          <p>{{ cat.desc }}</p>
+          <button type="button" class="btn-flecha" [routerLink]="['/categorias', cat.nombre]">➔</button>
+        </div>
       </div>
     </div>
   </div>

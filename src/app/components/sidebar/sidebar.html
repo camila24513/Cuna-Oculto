@@ -1,19 +1,35 @@
-<aside class="sidebar">
-  <div class="sidebar-logo">
-    <h2>🔔 Leyendas</h2>
-  </div>
-  <nav class="sidebar-nav">
-    <a routerLink="/inicio" routerLinkActive="active">
-      <span>🏠</span> Inicio
+<aside class="sidebar-container">
+  <!-- Logo de la campana y nombre del proyecto -->
+<div class="logo-box">
+  <img src="/assets/logo-campana.png" alt="Logo Cuna Oculto" class="logo-img">
+</div>
+
+  <!-- Navegación principal -->
+  <nav class="nav-menu">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-item">
+      <span class="icon">🏠</span>
+      <span class="text">INICIO</span>
     </a>
-    <a routerLink="/categorias" routerLinkActive="active">
-      <span>📁</span> Categorías
+
+    <a routerLink="/categorias" routerLinkActive="active" class="nav-item">
+      <span class="icon">🔲</span>
+      <span class="text">CATEGORÍAS</span>
     </a>
-    <a routerLink="/mis-historias" routerLinkActive="active">
-      <span>✍️</span> Mis Historias
+
+    <a routerLink="/mis-historias" routerLinkActive="active" class="nav-item flex-column">
+      <div class="nav-item-main">
+        <span class="icon icon-circle">┼</span>
+        <span class="text">MIS HISTORIAS</span>
+      </div>
+      <span class="subtext">Breve descripción</span>
     </a>
-    <a routerLink="/perfil" routerLinkActive="active">
-      <span>👤</span> Perfil
+
+    <a routerLink="/perfil" routerLinkActive="active" class="nav-item">
+      <span class="icon">👤</span>
+      <div class="perfil-text">
+        <span class="text">PERFIL</span>
+        <span class="arrow">➔</span>
+      </div>
     </a>
   </nav>
 </aside>
