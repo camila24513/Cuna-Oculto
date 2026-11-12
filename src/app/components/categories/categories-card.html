@@ -1,25 +1,14 @@
-<div class="categorias-container">
-  <!-- Barra de encabezado superior -->
-  <header class="top-header">
-    <h1 class="header-title">CUNA OCULTO</h1>
-  </header>
-
-  <div class="main-content">
-    <div class="titulo-seccion">
-      <h2>CATEGORÍAS:</h2>
+<div class="categories-grid">
+  <div *ngFor="let cat of categorias" class="category-card">
+    <div class="card-image">
+      <img [src]="cat.imagen" [alt]="cat.titulo" (error)="$any($event.target).src = 'assets/fondo-patron.png'" />
     </div>
-
-    <div class="grid-categorias">
-      <div *ngFor="let cat of categorias" class="card-categoria">
-        <div class="img-wrapper">
-          <img [src]="cat.img" [alt]="cat.nombre">
-        </div>
-        <div class="card-info">
-          <h3>{{ cat.nombre }}</h3>
-          <p>{{ cat.desc }}</p>
-          <button type="button" class="btn-flecha" [routerLink]="['/categorias', cat.nombre]">➔</button>
-        </div>
-      </div>
+    <div class="card-content">
+      <h3>{{ cat.titulo }}</h3>
+      <p>{{ cat.descripcion }}</p>
+      <a [routerLink]="['/categorias', cat.titulo]" class="btn-action">
+        →
+      </a>
     </div>
   </div>
 </div>
