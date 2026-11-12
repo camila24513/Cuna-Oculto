@@ -1,14 +1,18 @@
-<div class="categories-grid">
-  <div *ngFor="let cat of categorias" class="category-card">
-    <div class="card-image">
-      <img [src]="cat.imagen" [alt]="cat.titulo" (error)="$any($event.target).src = 'assets/fondo-patron.png'" />
-    </div>
-    <div class="card-content">
-      <h3>{{ cat.titulo }}</h3>
-      <p>{{ cat.descripcion }}</p>
-      <a [routerLink]="['/categorias', cat.titulo]" class="btn-action">
-        →
-      </a>
+<div class="categorias-container">
+  <div class="main-content">
+    <div class="categories-grid">
+      <div *ngFor="let cat of categorias" class="category-card">
+        <div class="card-image">
+          <img [src]="cat.imagen" [alt]="cat.titulo" (error)="$any($event.target).src = 'assets/fondo-patron.png'" />
+        </div>
+        <div class="card-content">
+          <h3>{{ cat.titulo }}</h3>
+          <p>{{ cat.descripcion }}</p>
+          <a [routerLink]="['/categorias', cat.titulo]" class="btn-action">
+            →
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </div>

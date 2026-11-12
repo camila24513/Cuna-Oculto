@@ -1,6 +1,10 @@
 .home-container {
+  margin-left: 260px; /* Evita que el sidebar tape el contenido */
+  min-height: 100vh;
   padding: 20px;
   color: #fff;
+  background-color: #0b0f19; /* Fondo oscuro para que resalte el texto blanco */
+  box-sizing: border-box;
 }
 
 .banner {
@@ -81,7 +85,7 @@
   text-align: center;
 }
 
-canvas {
+.canvas {
   border-radius: 8px;
   margin: 10px 0;
   max-height: 60vh;
@@ -109,4 +113,11 @@ canvas {
   padding: 10px 15px;
   border-radius: 6px;
   cursor: pointer;
+}
+/* AGREGA ESTO PARA RESOLVER EL COLAPSO CON EL SIDEBAR */
+.home-container {
+  margin-left: 260px; /* Desplaza el contenido a la derecha del sidebar de 260px */
+  min-height: 100vh;
+  background-color: #121824; /* Fondo oscuro para que el texto blanco resalte */
+  box-sizing: border-box;
 }

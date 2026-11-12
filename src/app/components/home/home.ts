@@ -2,16 +2,16 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Leyenda, LEYENDAS_MOCK } from '../../models/leyenda.model';
-import { CategoriesCardComponent } from '../categories/categories-card';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, CategoriesCardComponent],
+  imports: [CommonModule], // <-- Quitamos CategoriesCardComponent de aquí
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
 export class HomeComponent implements OnInit {
+  // MANTIENES TODO TU CÓDIGO EXACTAMENTE IGUAL HASTA EL FINAL
   @ViewChild('videoCanvas')
   canvasRef!: ElementRef<HTMLCanvasElement>;
 
@@ -26,17 +26,19 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.leyendaTop1 = this.leyendas.find(
-      l => l.rank === 1
-    )!;
-
-    this.leyendasSecundarias = this.leyendas.filter(
-      l => l.rank > 1
-    );
+    if (this.leyendas && this.leyendas.length > 0) {
+      // Intenta buscar por rank, si no existe toma el primer elemento
+      this.leyendaTop1 = this.leyendas.find(l => l.rank === 1) || this.leyendas[0];
+      
+      const secundarias = this.leyendas.filter(l => (l.rank ?? 0) > 1);
+      this.leyendasSecundarias = secundarias.length > 0 ? secundarias : this.leyendas.slice(1, 4);
+    }
   }
 
-  verDetalle(id: string): void {
-    this.router.navigate(['/leyenda', id]);
+  verDetalle(id?: string): void {
+    if (id) {
+      this.router.navigate(['/leyenda', id]);
+    }
   }
 
   abrirGeneradorVideo(leyenda: Leyenda, event: Event): void {
@@ -58,9 +60,7 @@ export class HomeComponent implements OnInit {
     this.mostrarModalVideo = false;
   }
 
-  private async dibujarVistaPreviaCanvas(
-    progress = 0
-  ): Promise<void> {
+  private async dibujarVistaPreviaCanvas(progress = 0): Promise<void> {
     if (!this.canvasRef || !this.leyendaSeleccionada) {
       return;
     }
@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
 
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    img.src = this.leyendaSeleccionada.imagenUrl;
+    img.src = this.leyendaSeleccionada.imagenUrl || this.leyendaSeleccionada.imagen;
 
     await img.decode();
 
@@ -117,8 +117,9 @@ export class HomeComponent implements OnInit {
     ctx.fillStyle = '#FFD700';
     ctx.font = '16px sans-serif';
 
+    const textoUbicacion = this.leyendaSeleccionada.lugar || this.leyendaSeleccionada.ubicacion || '';
     ctx.fillText(
-      this.leyendaSeleccionada.lugar,
+      textoUbicacion,
       canvas.width / 2,
       canvas.height - 60
     );
@@ -131,20 +132,15 @@ export class HomeComponent implements OnInit {
 
     const canvas = this.canvasRef.nativeElement;
 
-    if (typeof MediaRecorder === 'undefined' ||
-        typeof canvas.captureStream !== 'function') {
-      console.error(
-        'Este navegador no admite la grabación del canvas.'
-      );
+    if (typeof MediaRecorder === 'undefined' || typeof canvas.captureStream !== 'function') {
+      console.error('Este navegador no admite la grabación del canvas.');
       return;
     }
 
     const mimeType = 'video/webm';
 
     if (!MediaRecorder.isTypeSupported(mimeType)) {
-      console.error(
-        'Este navegador no admite el formato video/webm.'
-      );
+      console.error('Este navegador no admite el formato video/webm.');
       return;
     }
 
@@ -185,7 +181,7 @@ export class HomeComponent implements OnInit {
         const a = document.createElement('a');
 
         a.href = url;
-        a.download = `promo-${this.leyendaSeleccionada.id}.webm`;
+        a.download = `promo-${this.leyendaSeleccionada.id || 'leyenda'}.webm`;
         a.click();
 
         setTimeout(() => URL.revokeObjectURL(url), 1000);

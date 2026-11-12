@@ -1,40 +1,26 @@
-<div class="listado-container">
-  <header class="top-header">
-    <h2>CUNA OCULTO</h2>
-  </header>
-
+<div class="historias-container">
   <div class="main-content">
-    <div class="header-navegacion">
-      <a routerLink="/categorias" class="btn-back">← {{ categoriaSeleccionada || 'TODAS' }}</a>
-      
-      <div class="buscador-box">
-        <span class="icon-search">🔍</span>
-        <input 
-          type="text" 
-          [(ngModel)]="textoBusqueda" 
-          placeholder="Buscar historia..." 
-          class="input-buscador"
-        />
-      </div>
-    </div>
-
-    <div class="grid-historias" *ngIf="leyendasFiltradas.length > 0; else sinResultados">
-      <div *ngFor="let leyenda of leyendasFiltradas" class="card-historia">
-        <div class="card-img">
-          <img [src]="leyenda.imagenUrl" [alt]="leyenda.titulo">
-        </div>
-        <div class="card-body">
-          <h3>{{ leyenda.titulo }}</h3>
-          <p>{{ leyenda.resumen }}</p>
-          <a [routerLink]="['/leyenda', leyenda.id]" class="btn-flecha">➔</a>
+    <!-- Lista de Historias Filtradas: SOLO se muestra si NO estamos en Mis Historias -->
+    <ng-container *ngIf="!esMisHistorias">
+      <div class="grid-historias" *ngIf="leyendasFiltradas.length > 0; else sinResultados">
+        <div *ngFor="let leyenda of leyendasFiltradas" class="card-historia">
+          <div class="img-wrapper">
+            <img [src]="leyenda.imagen" [alt]="leyenda.titulo" (error)="$any($event.target).src = 'assets/fondo-patron.png'" />
+          </div>
+          <div class="card-info">
+            <h3>{{ leyenda.titulo }}</h3>
+            <p>{{ leyenda.descripcion }}</p>
+            <span class="badge-cat" *ngIf="leyenda.categoria">{{ leyenda.categoria }}</span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <ng-template #sinResultados>
-      <div class="mensaje-vacio">
-        <p>No se encontraron historias registradas.</p>
-      </div>
-    </ng-template>
+      <ng-template #sinResultados>
+        <div class="empty-state">
+          <p>No se encontraron historias en esta categoría.</p>
+        </div>
+      </ng-template>
+    </ng-container>
+
   </div>
 </div>

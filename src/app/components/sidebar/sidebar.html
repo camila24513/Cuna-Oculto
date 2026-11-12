@@ -1,35 +1,32 @@
-<aside class="sidebar-container">
-  <!-- Logo de la campana y nombre del proyecto -->
-<div class="logo-box">
-  <img src="/assets/logo-campana.png" alt="Logo Cuna Oculto" class="logo-img">
-</div>
-
-  <!-- Navegación principal -->
-  <nav class="nav-menu">
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-item">
-      <span class="icon">🏠</span>
-      <span class="text">INICIO</span>
-    </a>
-
-    <a routerLink="/categorias" routerLinkActive="active" class="nav-item">
-      <span class="icon">🔲</span>
-      <span class="text">CATEGORÍAS</span>
-    </a>
-
-    <a routerLink="/mis-historias" routerLinkActive="active" class="nav-item flex-column">
-      <div class="nav-item-main">
-        <span class="icon icon-circle">┼</span>
-        <span class="text">MIS HISTORIAS</span>
-      </div>
-      <span class="subtext">Breve descripción</span>
-    </a>
-
-    <a routerLink="/perfil" routerLinkActive="active" class="nav-item">
-      <span class="icon">👤</span>
-      <div class="perfil-text">
-        <span class="text">PERFIL</span>
-        <span class="arrow">➔</span>
-      </div>
-    </a>
-  </nav>
-</aside>
+<nav class="sidebar">
+  <div class="logo-container">
+    <img src="assets/logo-campana.png" alt="Cuna Oculto" class="logo" />
+  </div>
+  ...
+  <ul class="nav-links">
+    <li>
+      <a routerLink="/home" routerLinkActive="active">
+        <span>🏠 INICIO</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/categorias" routerLinkActive="active">
+        <span>🔲 CATEGORÍAS</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/mis-historias" routerLinkActive="active">
+        <span class="icon-plus">+</span>
+        <div class="text-group">
+          <strong>MIS HISTORIAS</strong>
+          <small>Subir o gestionar relatos</small>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/perfil" routerLinkActive="active">
+        <span>👤 PERFIL →</span>
+      </a>
+    </li>
+  </ul>
+</nav>

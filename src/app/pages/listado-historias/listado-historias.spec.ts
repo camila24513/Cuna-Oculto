@@ -1,18 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ListadoHistorias } from './listado-historias';
+import { provideRouter } from '@angular/router';
+import { ListadoHistoriasComponent } from './listado-historias';
 
-describe('ListadoHistorias', () => {
-  let component: ListadoHistorias;
-  let fixture: ComponentFixture<ListadoHistorias>;
+describe('ListadoHistoriasComponent', () => {
+  let component: ListadoHistoriasComponent;
+  let fixture: ComponentFixture<ListadoHistoriasComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ListadoHistorias],
+      imports: [ListadoHistoriasComponent],
+      providers: [provideRouter([])]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ListadoHistorias);
+    fixture = TestBed.createComponent(ListadoHistoriasComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   it('should create', () => {
