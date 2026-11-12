@@ -5,9 +5,17 @@ import { ListadoHistoriasComponent } from './pages/listado-historias/listado-his
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {
+    path: 'login',
+    loadComponent: () => import('./components/login/login').then(m => m.LoginComponent)
+  },
+  {
+    path: 'register',
+    loadComponent: () => import('./components/register/register').then(m => m.RegisterComponent)
+  },
   { path: 'home', component: HomeComponent },
   { path: 'categorias', component: CategoriesCardComponent },
-  { path: 'mis-historias', component: ListadoHistoriasComponent }, // <--
   { path: 'categorias/:categoria', component: ListadoHistoriasComponent },
-  // ... tus otras rutas
+  { path: 'mis-historias', component: ListadoHistoriasComponent },
+  { path: '**', redirectTo: 'home' }
 ];

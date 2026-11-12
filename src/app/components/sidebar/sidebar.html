@@ -1,32 +1,23 @@
 <nav class="sidebar">
   <div class="logo-container">
-    <img src="assets/logo-campana.png" alt="Cuna Oculto" class="logo" />
+    <img src="imagen/logo.png" alt="Cuna Oculto" class="logo" />
   </div>
-  ...
-  <ul class="nav-links">
-    <li>
-      <a routerLink="/home" routerLinkActive="active">
-        <span>🏠 INICIO</span>
-      </a>
-    </li>
-    <li>
-      <a routerLink="/categorias" routerLinkActive="active">
-        <span>🔲 CATEGORÍAS</span>
-      </a>
-    </li>
-    <li>
-      <a routerLink="/mis-historias" routerLinkActive="active">
-        <span class="icon-plus">+</span>
-        <div class="text-group">
-          <strong>MIS HISTORIAS</strong>
-          <small>Subir o gestionar relatos</small>
-        </div>
-      </a>
-    </li>
-    <li>
-      <a routerLink="/perfil" routerLinkActive="active">
-        <span>👤 PERFIL →</span>
-      </a>
-    </li>
-  </ul>
+
+  <nav class="nav-menu">
+    <a routerLink="/home" routerLinkActive="active" class="nav-item">
+      <span class="icon">🏠</span> INICIO
+    </a>
+    <a routerLink="/categorias" routerLinkActive="active" class="nav-item">
+      <span class="icon">📚</span> CATEGORÍAS
+    </a>
+    <a routerLink="/register" routerLinkActive="active" class="nav-item">
+      <span class="icon">📋</span> REGISTRARSE
+    </a>
+    <a routerLink="/mis-historias" routerLinkActive="active" class="nav-item">
+      <span class="icon">➕</span> MIS HISTORIAS
+    </a>
+    <a routerLink="/login" routerLinkActive="active" class="nav-item">
+      <span class="icon">👤</span> PERFIL
+    </a>
+  </nav>
 </nav>
