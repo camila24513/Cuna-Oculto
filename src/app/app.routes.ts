@@ -16,6 +16,9 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'categorias', component: CategoriesCardComponent },
   { path: 'categorias/:categoria', component: ListadoHistoriasComponent },
-  { path: 'mis-historias', component: ListadoHistoriasComponent },
+  {
+    path: 'mis-historias',
+    loadComponent: () => import('./components/mis-historias/mis-historias').then(m => m.MisHistoriasComponent)
+  },
   { path: '**', redirectTo: 'home' }
 ];

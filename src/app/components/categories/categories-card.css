@@ -1,7 +1,14 @@
-.categorias-container {
-  margin-left: 260px; /* Ancho exacto del sidebar para que no quede nada tapado */
-  min-height: 100vh;
-  box-sizing: border-box;
+.categories-container,
+.cards-container,
+.grid-categorias {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 1250px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 28px;
+  justify-content: center;
 }
 /* Estilo del encabezado gris visible */
 .top-header {
@@ -139,5 +146,12 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
   transition: transform 0.2s ease, border-color 0.2s ease;
   height: 400px;
+  box-sizing: border-box;
+}
+:host {
+  display: block;
+  margin-left: 260px; /* Alineación exacta con el menú */
+  min-height: 100vh;
+  padding: 35px 40px;
   box-sizing: border-box;
 }
