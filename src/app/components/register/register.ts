@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthMockService } from '../../services/auth.mock.service';
+
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -46,6 +47,15 @@ export class RegisterComponent {
     try {
       const { nombre, email, password } = this.registerForm.value;
       await this.authService.register(nombre, email, password);
+
+      const usuarioRegistrado = {
+        nombre: nombre,
+        correo: email,
+        rol: 'Narrador Dolorense'
+      };
+      localStorage.setItem('usuario_activo', JSON.stringify(usuarioRegistrado));
+      localStorage.setItem('usuario_' + email, JSON.stringify(usuarioRegistrado));
+
       this.router.navigate(['/home']);
     } catch (error) {
       this.mensajeError = 'Ocurrió un error al crear la cuenta.';

@@ -40,6 +40,24 @@ export class LoginComponent {
     try {
       const { email, password } = this.loginForm.value;
       await this.authService.login(email, password);
+
+      // Buscamos si ya se había registrado antes en este navegador
+      const guardado = localStorage.getItem('usuario_' + email);
+
+      if (guardado) {
+        localStorage.setItem('usuario_activo', guardado);
+      } else {
+        // Si entró directo sin pasar por registro, extraemos un nombre limpio desde su correo
+        const nombreDesdeCorreo = email.split('@')[0];
+        const nombreFormateado = nombreDesdeCorreo.charAt(0).toUpperCase() + nombreDesdeCorreo.slice(1);
+
+        localStorage.setItem('usuario_activo', JSON.stringify({
+          nombre: nombreFormateado,
+          correo: email,
+          rol: 'Narrador Dolorense'
+        }));
+      }
+
       this.router.navigate(['/home']);
     } catch (error) {
       this.mensajeError = 'Correo o contraseña incorrectos.';
@@ -52,6 +70,16 @@ export class LoginComponent {
     this.cargando = true;
     try {
       await this.authService.loginWithGoogle();
+
+      // Guardamos datos de sesión rápida con Google si aún no existe un usuario activo
+      if (!localStorage.getItem('usuario_activo')) {
+        localStorage.setItem('usuario_activo', JSON.stringify({
+          nombre: 'Usuario Google',
+          correo: 'cuenta.google@cunaoculto.mx',
+          rol: 'Narrador Dolorense'
+        }));
+      }
+
       this.router.navigate(['/home']);
     } catch (error) {
       this.mensajeError = 'Error al iniciar sesión con Google.';
