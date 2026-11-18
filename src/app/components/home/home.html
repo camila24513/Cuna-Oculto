@@ -1,29 +1,50 @@
 <div class="home-container">
-  <main class="main-content">
-    <header class="hero-section">
-      <h1 class="titulo-principal">Historias que no todos conocemos q</h1>
-      <p class="subtitulo">Descubre las leyendas, mitos y misterios de Dolores Hidalgo</p>
-    </header>
+  <header class="header-top">
+    <h1>MEJORES LEYENDAS DE LA SEMANA</h1>
+  </header>
 
-    <!-- Tarjeta Destacada del Mes -->
-    <section class="destacado-section">
-      <div class="card-misterio tarjeta-destacada">
-        <img src="images/callejon-milagros.jpg" alt="Callejón de los Milagros" class="card-img" />
-        <div class="card-info">
-          <h2>El Jinete del Callejón de los Milagros</h2>
-          <p>
-            Cuentan en Dolores Hidalgo que cuando el viento nocturno sopla por el centro, el eco del pasado regresa...
-            Hay sombras que nunca llegaron a la cita con la historia, pero siguen rondando en la penumbra.
-          </p>
-          <div class="rating">
-            <span class="stars">★★★★★</span>
-            <span class="score">5</span>
-          </div>
+  <!-- Primer Lugar -->
+  <section class="podium-section">
+    <h3 class="lugar-title">Primer lugar:</h3>
+    <div class="card-misterio tarjeta-principal">
+      <img src="imagen/1.jpg" alt="El Jinete del Callejón" class="card-img-main" />
+      <div class="card-body">
+        <h2 class="titulo-leyenda">El Jinete sin cabeza</h2>
+        <p class="texto-leyenda">
+          Cuentan en Dolores Hidalgo que cuando el viento nocturno sopla por el centro, el eco del pasado regresa...
+          Hay sombras que nunca llegaron a la cita con la historia, pero siguen rondando en la penumbra.
+        </p>
+        <div class="stars">★★★★★ <span class="score">5</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Segundo y Tercer Lugar -->
+  <section class="secundarios-grid">
+    <div class="lugar-box">
+      <h4 class="lugar-title">Segundo lugar:</h4>
+      <div class="card-misterio tarjeta-mini">
+        <img src="imagen/2.jpg" alt="Leyenda" class="card-img-mini" />
+        <div class="card-body-mini">
+          <h3 class="titulo-leyenda-mini">la llorona</h3>
+          <p class="texto-leyenda-mini">Cuentan en Dolores Hidalgo que cuando el viento nocturno...</p>
+          <div class="stars">★★★★★ <span class="score">5</span></div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Componente de Categorías insertado abajo -->
-    <app-categories-card></app-categories-card>
-  </main>
+    <div class="lugar-box">
+      <h4 class="lugar-title">Tercer lugar:</h4>
+      <div class="card-misterio tarjeta-mini">
+        <img src="imagen/3.jpg" alt="Leyenda" class="card-img-mini" />
+        <div class="card-body-mini">
+          <h3 class="titulo-leyenda-mini">el señor del costal</h3>
+          <p class="texto-leyenda-mini">Cuentan en Dolores Hidalgo que cuando el viento nocturno...</p>
+          <div class="stars">★★★★★ <span class="score">5</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
 </div>

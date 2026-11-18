@@ -65,3 +65,77 @@
   color: #fbc02d;
   font-size: 1.2rem;
 }
+
+.header-top h1 {
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 2px;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.lugar-title {
+  font-family: 'Caveat', cursive;
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+  text-decoration: underline;
+}
+
+.tarjeta-principal {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.card-img-main {
+  width: 250px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.titulo-leyenda {
+  font-family: 'Caveat', cursive;
+  font-size: 2.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.texto-leyenda {
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+.secundarios-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.tarjeta-mini {
+  display: flex;
+  gap: 1rem;
+}
+
+.card-img-mini {
+  width: 100px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.card-body-mini h3 {
+  font-family: 'Caveat', cursive;
+  font-size: 1.2rem;
+}
+
+.card-body-mini p {
+  font-size: 0.75rem;
+  font-style: italic;
+}
+
+.stars {
+  color: #ffca28;
+  font-weight: bold;
+}

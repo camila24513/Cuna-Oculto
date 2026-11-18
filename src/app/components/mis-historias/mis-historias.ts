@@ -1,8 +1,10 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { FiltroTextoService, ResultadoFiltro } from '../../services/filtro-texto';
 import { SightengineService, ResultadoImagen } from '../../services/sightengine';
+import { HistoriasService } from '../../services/historias';
 
 @Component({
   selector: 'app-mis-historias',
@@ -11,7 +13,7 @@ import { SightengineService, ResultadoImagen } from '../../services/sightengine'
   templateUrl: './mis-historias.html',
   styleUrls: ['./mis-historias.css']
 })
-export class MisHistoriasComponent {
+export class MisHistoriasComponent implements OnInit, OnDestroy {
   pasoActual: number = 1;
   historiaForm: FormGroup;
   resultadoFiltro: ResultadoFiltro = { esValido: true, palabrasDetectadas: [] };
@@ -21,6 +23,10 @@ export class MisHistoriasComponent {
   resultadoImagen: ResultadoImagen | null = null;
   nombreImagenSeleccionada: string = '';
   nombreAudioSeleccionado: string = '';
+  imagenBase64: string = ''; // Para guardar la imagen en el perfil
+
+  private borradorIdActual?: number;
+  private fuePublicada: boolean = false;
 
   categorias: string[] = [
     'Mitos Dolorenses', 'Mitos Escolares', 'Mitos Escondidos', 'Leyendas Locales',
@@ -33,7 +39,9 @@ export class MisHistoriasComponent {
     private fb: FormBuilder,
     private filtroTextoService: FiltroTextoService,
     private sightengineService: SightengineService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private historiasService: HistoriasService,
+    private route: ActivatedRoute
   ) {
     this.historiaForm = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(5)]],
@@ -49,6 +57,44 @@ export class MisHistoriasComponent {
     });
   }
 
+  ngOnInit(): void {
+    // Si el usuario viene de "Continuar editando" en la pestaña Borradores del Perfil
+    this.route.queryParams.subscribe(params => {
+      if (params['borradorId']) {
+        this.borradorIdActual = Number(params['borradorId']);
+        const borrador = this.historiasService.obtenerBorradores().find(b => b.id === this.borradorIdActual);
+        
+        if (borrador) {
+          this.historiaForm.patchValue({
+            titulo: borrador.titulo === 'Historia sin título (Borrador)' ? '' : borrador.titulo,
+            categoria: borrador.categoria === 'Sin categoría' ? '' : borrador.categoria,
+            ubicacion: borrador.ubicacion || '',
+            descripcion: borrador.descripcion || ''
+          });
+          this.imagenBase64 = borrador.imagen || '';
+        }
+      }
+    });
+  }
+
+  // Se ejecuta automáticamente si el usuario cambia de pestaña sin terminar la historia
+  ngOnDestroy(): void {
+    const valores = this.historiaForm.value;
+    const tieneContenido = 
+      (valores.titulo && valores.titulo.trim() !== '') || 
+      (valores.descripcion && valores.descripcion.trim() !== '');
+
+    if (!this.fuePublicada && tieneContenido) {
+      this.historiasService.guardarBorrador({
+        titulo: valores.titulo,
+        categoria: valores.categoria,
+        ubicacion: valores.ubicacion,
+        descripcion: valores.descripcion,
+        imagen: this.imagenBase64 || 'fondoapp.png'
+      }, this.borradorIdActual);
+    }
+  }
+
   get contadorCaracteres(): number {
     return this.historiaForm.get('descripcion')?.value?.length || 0;
   }
@@ -60,6 +106,15 @@ export class MisHistoriasComponent {
 
     this.resultadoFiltro = this.filtroTextoService.evaluarTexto(textoCompleto);
     this.evaluadoTexto = true;
+  }
+
+  // Convierte la imagen seleccionada a Base64 para poder mostrarla en el Perfil
+  private convertirImagenABase64(file: File): void {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      this.imagenBase64 = e.target?.result as string;
+    };
+    reader.readAsDataURL(file);
   }
 
   onFileSelected(event: any, tipo: 'foto' | 'audio'): void {
@@ -79,8 +134,10 @@ export class MisHistoriasComponent {
 
           if (this.resultadoImagen.esApta) {
             this.historiaForm.patchValue({ imagen: file });
+            this.convertirImagenABase64(file);
           } else {
             this.historiaForm.patchValue({ imagen: null });
+            this.imagenBase64 = '';
           }
           this.cdr.detectChanges();
         },
@@ -123,6 +180,7 @@ export class MisHistoriasComponent {
               mensaje: '🚫 Imagen rechazada: Se detectó contenido explícito, armas, violencia o términos no permitidos (Score: 0.89 / máx 0.5).'
             };
             this.historiaForm.patchValue({ imagen: null });
+            this.imagenBase64 = '';
           } else {
             this.resultadoImagen = {
               esApta: true,
@@ -132,6 +190,7 @@ export class MisHistoriasComponent {
                 : 'Imagen evaluada y libre de contenido inapropiado.'
             };
             this.historiaForm.patchValue({ imagen: file });
+            this.convertirImagenABase64(file);
           }
           this.cdr.detectChanges();
         }
@@ -164,9 +223,20 @@ export class MisHistoriasComponent {
     this.pasoActual = 1;
   }
 
-  // Confirma el envío y pasa al Paso 4 (Éxito)
+  // Confirma el envío, la guarda en "Mis Historias" del Perfil y pasa al Paso 4 (Éxito)
   confirmarEnvioFinal(): void {
-    console.log('Historia publicada con éxito:', this.historiaForm.value);
+    const valores = this.historiaForm.value;
+
+    this.historiasService.publicarHistoria({
+      titulo: valores.titulo,
+      categoria: valores.categoria,
+      ubicacion: valores.ubicacion,
+      descripcion: valores.descripcion,
+      imagen: this.imagenBase64 || 'fondoapp.png'
+    }, this.borradorIdActual);
+
+    this.fuePublicada = true;
+    console.log('Historia publicada con éxito:', valores);
     this.pasoActual = 4;
   }
 
@@ -176,6 +246,9 @@ export class MisHistoriasComponent {
     this.resultadoImagen = null;
     this.nombreImagenSeleccionada = '';
     this.nombreAudioSeleccionado = '';
+    this.imagenBase64 = '';
+    this.borradorIdActual = undefined;
+    this.fuePublicada = false;
     this.evaluadoTexto = false;
     this.pasoActual = 1;
   }

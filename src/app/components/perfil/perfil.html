@@ -1,0 +1,116 @@
+<div class="perfil-container">
+  <!-- Tarjeta Superior de Información del Usuario -->
+  <div class="perfil-header">
+    <div class="avatar-wrapper">
+      <img [src]="usuario.fotoUrl" alt="Foto de perfil" class="avatar-img" />
+      <label for="input-foto" class="btn-editar-foto" title="Cambiar foto">
+        
+      </label>
+      <input
+        id="input-foto"
+        type="file"
+        accept="image/*"
+        (change)="onSeleccionarFoto($event)"
+        hidden
+      />
+    </div>
+
+    <div class="usuario-info">
+      <h2>{{ usuario.nombre }}</h2>
+      <p class="correo">{{ usuario.correo }}</p>
+      <span class="badge-rol">{{ usuario.rol }}</span>
+
+      <div class="stats-row">
+        <div class="stat">
+          <strong>{{ misHistorias.length }}</strong>
+          <span>Publicadas</span>
+        </div>
+        <div class="stat">
+          <strong>{{ favoritos.length }}</strong>
+          <span>Favoritos</span>
+        </div>
+        <div class="stat">
+          <strong>{{ borradores.length }}</strong>
+          <span>Borradores</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-logout" (click)="cerrarSesion()">
+      Cerrar Sesión
+    </button>
+  </div>
+
+  <!-- Pestañas de Navegación -->
+  <div class="perfil-tabs">
+    <button
+      [class.active]="tabActiva === 'mis-historias'"
+      (click)="cambiarTab('mis-historias')"
+    >
+      Mis Historias ({{ misHistorias.length }})
+    </button>
+    <button
+      [class.active]="tabActiva === 'favoritos'"
+      (click)="cambiarTab('favoritos')"
+    >
+      Favoritos ({{ favoritos.length }})
+    </button>
+    <button
+      [class.active]="tabActiva === 'borradores'"
+      (click)="cambiarTab('borradores')"
+    >
+      Borradores ({{ borradores.length }})
+    </button>
+  </div>
+
+  <!-- Contenido Dinámico según Pestaña -->
+  <div class="perfil-contenido">
+    <!-- 1. MIS HISTORIAS -->
+    <div *ngIf="tabActiva === 'mis-historias'" class="grid-historias">
+      <div *ngFor="let item of misHistorias" class="historia-card">
+        <img [src]="item.imagen" [alt]="item.titulo" />
+        <div class="card-body">
+          <span class="categoria">{{ item.categoria }}</span>
+          <h3>{{ item.titulo }}</h3>
+          <p class="fecha">Publicado: {{ item.fecha }}</p>
+        </div>
+      </div>
+      <p *ngIf="misHistorias.length === 0" class="vacio">
+        Aún no has publicado ninguna historia.
+      </p>
+    </div>
+
+    <!-- 2. FAVORITOS -->
+    <div *ngIf="tabActiva === 'favoritos'" class="grid-historias">
+      <div *ngFor="let item of favoritos" class="historia-card">
+        <img [src]="item.imagen" [alt]="item.titulo" />
+        <div class="card-body">
+          <span class="categoria">{{ item.categoria }}</span>
+          <h3>{{ item.titulo }}</h3>
+          <p class="fecha">{{ item.fecha }}</p>
+        </div>
+      </div>
+      <p *ngIf="favoritos.length === 0" class="vacio">
+        No tienes leyendas guardadas en favoritos.
+      </p>
+    </div>
+
+    <!-- 3. BORRADORES -->
+    <div *ngIf="tabActiva === 'borradores'" class="grid-historias">
+      <div *ngFor="let item of borradores" class="historia-card borrador">
+        <img [src]="item.imagen" [alt]="item.titulo" />
+        <div class="card-body">
+          <span class="categoria">{{ item.categoria }}</span>
+          <h3>{{ item.titulo }}</h3>
+          <p class="fecha">Última edición: {{ item.fecha }}</p>
+          <button class="btn-continuar" (click)="continuarBorrador(item.id)">
+            Continuar editando
+          </button>
+        </div>
+      </div>
+      <p *ngIf="borradores.length === 0" class="vacio">
+        No tienes borradores pendientes.
+      </p>
+    </div>
+  </div>
+</div>
