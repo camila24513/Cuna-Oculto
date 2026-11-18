@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Leyenda } from '../../models/leyenda.model';
 import { LEYENDAS_MOCK } from '../../models/leyendas.mock';
 
@@ -18,29 +18,13 @@ export class ListadoHistoriasComponent implements OnInit {
   historiasBase: Leyenda[] = [];
   esMisHistorias: boolean = false;
 
-  // Objeto para almacenar la nueva historia creada por el usuario
-  nuevaHistoria: Leyenda = {
-    titulo: '',
-    descripcion: '',
-    categoria: '',
-    ubicacion: '',
-    imagen: 'assets/fondo.png'
-  };
-
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const cat = params.get('categoria') || '';
       this.categoriaSeleccionada = cat ? decodeURIComponent(cat).trim() : '';
-      
-      // Evalúa si estás navegando en la ruta de 'mis-historias' o no hay categoría selecc.
-      const urlActual = this.router.url;
-      this.esMisHistorias = urlActual.includes('mis-historias') || !this.categoriaSeleccionada;
-
+      this.esMisHistorias = false;
       this.cargarHistorias();
     });
   }
@@ -53,27 +37,6 @@ export class ListadoHistoriasComponent implements OnInit {
       );
     } else {
       this.historiasBase = LEYENDAS_MOCK;
-    }
-  }
-
-  agregarHistoria(): void {
-    if (this.nuevaHistoria.titulo && this.nuevaHistoria.descripcion) {
-      // Agregamos la nueva leyenda al listado central
-      LEYENDAS_MOCK.unshift({ ...this.nuevaHistoria });
-      
-      // Recargamos la lista actual
-      this.cargarHistorias();
-
-      // Limpiamos el formulario
-      this.nuevaHistoria = {
-        titulo: '',
-        descripcion: '',
-        categoria: '',
-        ubicacion: '',
-        imagen: 'assets/fondo.png'
-      };
-      
-      alert('¡Tu historia ha sido agregada exitosamente!');
     }
   }
 
