@@ -1,0 +1,244 @@
+:host {
+  display: block;
+  margin-left: 260px; /* Alineación perfecta a la derecha del sidebar de 260px */
+  min-height: 100vh;
+  box-sizing: border-box;
+  color: #ffffff;
+}
+
+.historias-container,
+.listado-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px 30px;
+  box-sizing: border-box;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 10px 0;
+  box-sizing: border-box;
+}
+
+/* Encabezado oscuro arriba de las historias */
+.header-section {
+  order: -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  background: rgba(11, 15, 25, 0.94);
+  backdrop-filter: blur(8px);
+  padding: 16px 24px;
+  border-radius: 12px;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  margin-bottom: 28px;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+.btn-back {
+  color: #f8fafc;
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-back:hover {
+  color: #38bdf8;
+  transform: translateX(-3px);
+}
+
+/* Contenedor derecho (Botón + Buscador) */
+.acciones-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-left: auto;
+}
+
+.btn-registrar {
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-registrar:hover {
+  background: linear-gradient(135deg, #38bdf8, #0284c7);
+  color: #0b0f19;
+  transform: translateY(-2px);
+}
+
+.search-box input {
+  background-color: #161e31;
+  color: #f8fafc;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  width: 240px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-box input::placeholder {
+  color: #94a3b8;
+}
+
+.search-box input:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+
+/* Grid y Tarjetas de Historias */
+.grid-historias {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  width: 100%;
+}
+
+.card-historia {
+  background-color: #161e2e;
+  border: 1px solid #232d3f;
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+.img-wrapper {
+  width: 100%;
+  height: 160px;
+  margin-bottom: 14px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.card-info h3 {
+  margin: 0 0 8px 0;
+  font-family: 'Georgia', serif;
+  font-size: 1.15rem;
+  color: #f8fafc;
+}
+
+.card-info p {
+  margin: 0 0 14px 0;
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+.badge-cat {
+  display: inline-block;
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.empty-state,
+.mensaje-vacio {
+  background: rgba(11, 15, 25, 0.88);
+  border-radius: 12px;
+  text-align: center;
+  padding: 40px;
+  color: #94a3b8;
+}
+
+/* Sección del formulario para crear historias */
+.crear-historia-card {
+  background: #161e2e;
+  border: 1px solid #232d3f;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 30px;
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.crear-historia-card h3 {
+  margin-top: 0;
+  color: #38bdf8;
+  font-family: 'Georgia', serif;
+}
+
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-grid input,
+.form-grid select,
+.form-grid textarea {
+  background: #0b0f19;
+  border: 1px solid #334155;
+  color: #fff;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.form-grid input:focus,
+.form-grid select:focus,
+.form-grid textarea:focus {
+  border-color: #38bdf8;
+}
+
+.btn-publicar {
+  background: #0284c7;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-publicar:hover {
+  background: #0369a1;
+}
+
+.btn-publicar:disabled {
+  background: #334155;
+  cursor: not-allowed;
+}
