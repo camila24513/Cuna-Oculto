@@ -30,6 +30,6 @@ export class CategoriesCardComponent {
     { titulo: 'Sucesos Inexplicables', descripcion: 'Acontecimientos extraños a los que nadie ha podido dar respuesta.', imagen: 'assets/sucesos-inexplicables.jpg' },
     { titulo: 'Historias Rurales y del Campo', descripcion: 'Misterios y presencias acechando en caminos y brechas apartadas.', imagen: 'assets/historias-rurales.jpg' },
     { titulo: 'Tesoros Ocultos y En entierros', descripcion: 'Leyendas de riquezas escondidas y las ánimas que las custodian.', imagen: 'assets/tesoros-ocultos.jpg' },
-    { titulo: 'Pactos y Maldiciones', descripcion: 'Acuerdos oscuros y promesas marcadas por un destino fatal.', imagen: 'assets/pactos-maldiciones.jpg' }
+    { titulo: 'Pactos y Maldiciones', descripcion: 'Acuerdos oscuros y promesas marcadas por un destino fatal.', imagen: 'assets/pactos.jpg' }
   ];
 }
