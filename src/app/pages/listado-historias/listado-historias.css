@@ -5,7 +5,6 @@
   box-sizing: border-box;
   color: #ffffff;
 }
-
 .historias-container,
 .listado-container {
   width: 100%;
@@ -151,8 +150,8 @@
 
 .card-info h3 {
   margin: 0 0 8px 0;
-  font-family: 'Georgia', serif;
   font-size: 1.15rem;
+  font-weight: 700;
   color: #f8fafc;
 }
 

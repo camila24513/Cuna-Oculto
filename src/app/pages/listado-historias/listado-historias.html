@@ -1,11 +1,33 @@
 <div class="historias-container">
   <div class="main-content">
+    <!-- Encabezado y Buscador (AHORA ARRIBA) -->
+    <div class="header-section">
+      <a routerLink="/categorias" class="btn-back">
+        ← {{ esMisHistorias ? 'MIS HISTORIAS' : (categoriaSeleccionada || 'TODAS LAS HISTORIAS') }}
+      </a>
+
+      <!-- Botón para ir a registrar historia (solo visible dentro de categorías) -->
+      <div class="acciones-header" *ngIf="!esMisHistorias">
+        <a routerLink="/mis-historias" class="btn-registrar">
+          + Publicar Historia
+        </a>
+
+        <div class="search-box">
+          <input
+            type="text"
+            placeholder="Buscar historia..."
+            [(ngModel)]="textoBusqueda"
+          />
+        </div>
+      </div>
+    </div>
+
     <!-- Lista de Historias Filtradas: SOLO se muestra si NO estamos en Mis Historias -->
     <ng-container *ngIf="!esMisHistorias">
       <div class="grid-historias" *ngIf="leyendasFiltradas.length > 0; else sinResultados">
         <div *ngFor="let leyenda of leyendasFiltradas" class="card-historia">
           <div class="img-wrapper">
-            <img [src]="leyenda.imagen" [alt]="leyenda.titulo" (error)="$any($event.target).src = 'assets/fondo-patron.png'" />
+            <img [src]="leyenda.imagen" [alt]="leyenda.titulo" (error)="$any($event.target).src = 'imagen/fondo.jpg'" />
           </div>
           <div class="card-info">
             <h3>{{ leyenda.titulo }}</h3>
