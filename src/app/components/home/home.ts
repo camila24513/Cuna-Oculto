@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
     }
 
     this.historiasService.toggleFavorito({
-      id: leyenda.id || '',
+      id: Number(leyenda.id) || 0,
       titulo: leyenda.titulo,
       categoria: leyenda.categoria || 'General',
       fecha: 'Hoy',
@@ -59,10 +59,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  esFavorito(id?: string): boolean {
-    if (!id) return false;
-    return this.historiasService.esFavorito ? this.historiasService.esFavorito(id) : false;
-  }
 
   // --- A PARTIR DE AQUÍ TODO TU CÓDIGO DE VIDEO SIGUE INTACTO ---
 
