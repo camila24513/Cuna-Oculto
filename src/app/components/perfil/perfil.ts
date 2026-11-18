@@ -35,6 +35,16 @@ export class PerfilComponent implements OnInit {
   }
 
   cargarDatosPerfil(): void {
+    // 1. Leemos el usuario que inició sesión o se registró
+    const usuarioGuardado = localStorage.getItem('usuario_activo');
+    if (usuarioGuardado) {
+      const datos = JSON.parse(usuarioGuardado);
+      this.usuario.nombre = datos.nombre || 'Usuario';
+      this.usuario.correo = datos.correo || 'usuario@cunaoculto.mx';
+      this.usuario.rol = datos.rol || 'Narrador Dolorense';
+    }
+
+    // 2. Cargamos su foto y sus historias
     this.usuario.fotoUrl = this.historiasService.obtenerFotoPerfil();
     this.misHistorias = this.historiasService.obtenerPublicadas();
     this.favoritos = this.historiasService.obtenerFavoritos();
