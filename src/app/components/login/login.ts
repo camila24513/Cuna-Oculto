@@ -39,26 +39,27 @@ export class LoginComponent {
 
     try {
       const { email, password } = this.loginForm.value;
-      await this.authService.login(email, password);
-
-      // Buscamos si ya se había registrado antes en este navegador
       const guardado = localStorage.getItem('usuario_' + email);
 
-      if (guardado) {
-        localStorage.setItem('usuario_activo', guardado);
-      } else {
-        // Si entró directo sin pasar por registro, extraemos un nombre limpio desde su correo
-        const nombreDesdeCorreo = email.split('@')[0];
-        const nombreFormateado = nombreDesdeCorreo.charAt(0).toUpperCase() + nombreDesdeCorreo.slice(1);
-
-        localStorage.setItem('usuario_activo', JSON.stringify({
-          nombre: nombreFormateado,
-          correo: email,
-          rol: 'Narrador Dolorense'
-        }));
+      // Si el correo no existe, bloquea el acceso
+      if (!guardado) {
+        this.mensajeError = 'Esta cuenta no existe. Por favor regístrate primero.';
+        this.cargando = false;
+        return;
       }
 
-      this.router.navigate(['/home']);
+      const datosUsuario = JSON.parse(guardado);
+
+      // Valida que la contraseña coincida
+      if (datosUsuario.password && datosUsuario.password !== password) {
+        this.mensajeError = 'Contraseña incorrecta.';
+        this.cargando = false;
+        return;
+      }
+
+      await this.authService.login(email, password);
+      localStorage.setItem('usuario_activo', guardado);
+      this.router.navigate(['/perfil']);
     } catch (error) {
       this.mensajeError = 'Correo o contraseña incorrectos.';
     } finally {
@@ -70,17 +71,13 @@ export class LoginComponent {
     this.cargando = true;
     try {
       await this.authService.loginWithGoogle();
-
-      // Guardamos datos de sesión rápida con Google si aún no existe un usuario activo
-      if (!localStorage.getItem('usuario_activo')) {
-        localStorage.setItem('usuario_activo', JSON.stringify({
-          nombre: 'Usuario Google',
-          correo: 'cuenta.google@cunaoculto.mx',
-          rol: 'Narrador Dolorense'
-        }));
-      }
-
-      this.router.navigate(['/home']);
+      const usuarioGoogle = {
+        nombre: 'Usuario Google',
+        correo: 'cuenta.google@cunaoculto.mx',
+        rol: 'Narrador Dolorense'
+      };
+      localStorage.setItem('usuario_activo', JSON.stringify(usuarioGoogle));
+      this.router.navigate(['/perfil']);
     } catch (error) {
       this.mensajeError = 'Error al iniciar sesión con Google.';
     } finally {

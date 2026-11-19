@@ -29,7 +29,6 @@ export class RegisterComponent {
     }, { validators: this.passwordMatchValidator });
   }
 
-  // Validador personalizado para confirmar contraseña
   passwordMatchValidator(g: FormGroup) {
     return g.get('password')?.value === g.get('confirmPassword')?.value
       ? null : { mismatch: true };
@@ -46,17 +45,26 @@ export class RegisterComponent {
 
     try {
       const { nombre, email, password } = this.registerForm.value;
+
+      if (localStorage.getItem('usuario_' + email)) {
+        this.mensajeError = 'Este correo ya está registrado. Inicia sesión.';
+        this.cargando = false;
+        return;
+      }
+
       await this.authService.register(nombre, email, password);
 
       const usuarioRegistrado = {
         nombre: nombre,
         correo: email,
+        password: password,
         rol: 'Narrador Dolorense'
       };
+
       localStorage.setItem('usuario_activo', JSON.stringify(usuarioRegistrado));
       localStorage.setItem('usuario_' + email, JSON.stringify(usuarioRegistrado));
 
-      this.router.navigate(['/home']);
+      this.router.navigate(['/perfil']);
     } catch (error) {
       this.mensajeError = 'Ocurrió un error al crear la cuenta.';
     } finally {
