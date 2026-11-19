@@ -2,16 +2,16 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Leyenda, LEYENDAS_MOCK } from '../../models/leyenda.model';
-
+// 1. Importamos el servicio (ajusta a '../../services/historias' si tu archivo no lleva .service)
+import { HistoriasService } from '../../services/historias';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule], // <-- Quitamos CategoriesCardComponent de aquí
+  imports: [CommonModule],
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
 export class HomeComponent implements OnInit {
-  // MANTIENES TODO TU CÓDIGO EXACTAMENTE IGUAL HASTA EL FINAL
   @ViewChild('videoCanvas')
   canvasRef!: ElementRef<HTMLCanvasElement>;
 
@@ -23,13 +23,16 @@ export class HomeComponent implements OnInit {
   grabando = false;
   leyendaSeleccionada!: Leyenda;
 
-  constructor(private router: Router) {}
+  // 2. Inyectamos HistoriasService junto a Router
+  constructor(
+    private router: Router,
+    private historiasService: HistoriasService
+  ) {}
 
   ngOnInit(): void {
     if (this.leyendas && this.leyendas.length > 0) {
-      // Intenta buscar por rank, si no existe toma el primer elemento
       this.leyendaTop1 = this.leyendas.find(l => l.rank === 1) || this.leyendas[0];
-      
+
       const secundarias = this.leyendas.filter(l => (l.rank ?? 0) > 1);
       this.leyendasSecundarias = secundarias.length > 0 ? secundarias : this.leyendas.slice(1, 4);
     }
@@ -40,6 +43,24 @@ export class HomeComponent implements OnInit {
       this.router.navigate(['/leyenda', id]);
     }
   }
+
+  // 3. Métodos para gestionar favoritos sin abrir el detalle por accidente
+  marcarFavorito(leyenda: Leyenda, event?: Event): void {
+    if (event) {
+      event.stopPropagation(); // Evita que al dar clic en el corazón te redirija a /leyenda/:id
+    }
+
+    this.historiasService.toggleFavorito({
+      id: Number(leyenda.id) || 0,
+      titulo: leyenda.titulo,
+      categoria: leyenda.categoria || 'General',
+      fecha: 'Hoy',
+      imagen: leyenda.imagenUrl || leyenda.imagen
+    });
+  }
+
+
+  // --- A PARTIR DE AQUÍ TODO TU CÓDIGO DE VIDEO SIGUE INTACTO ---
 
   abrirGeneradorVideo(leyenda: Leyenda, event: Event): void {
     event.stopPropagation();

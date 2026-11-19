@@ -188,3 +188,29 @@
   color: #ffca28;
   font-weight: bold;
 }
+
+
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.btn-favorito {
+  background-color: rgba(255, 68, 68, 0.15);
+  color: #ff6b6b;
+  border: 1px solid #ff4444;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-favorito:hover {
+  background-color: #ff4444;
+  color: #ffffff;
+  transform: scale(1.05);
+}

@@ -14,7 +14,20 @@
           Cuentan en Dolores Hidalgo que cuando el viento nocturno sopla por el centro, el eco del pasado regresa...
           Hay sombras que nunca llegaron a la cita con la historia, pero siguen rondando en la penumbra.
         </p>
-        <div class="stars">★★★★★ <span class="score">5</span></div>
+        <div class="card-actions">
+          <div class="stars">★★★★★ <span class="score">5</span></div>
+          <button
+            type="button"
+            class="btn-favorito"
+            (click)="marcarFavorito({
+              id: '1',
+              titulo: 'El Jinete sin cabeza',
+              categoria: 'Leyendas Locales',
+              imagen: 'imagen/1.jpg'
+            }, $event)">
+            ❤️ Favorito
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -24,11 +37,24 @@
     <div class="lugar-box">
       <h4 class="lugar-title">Segundo lugar:</h4>
       <div class="card-misterio tarjeta-mini">
-        <img src="imagen/2.jpg" alt="Leyenda" class="card-img-mini" />
+        <img src="imagen/2.jpg" alt="La Llorona" class="card-img-mini" />
         <div class="card-body-mini">
           <h3 class="titulo-leyenda-mini">la llorona</h3>
           <p class="texto-leyenda-mini">Cuentan en Dolores Hidalgo que cuando el viento nocturno...</p>
-          <div class="stars">★★★★★ <span class="score">5</span></div>
+          <div class="card-actions">
+            <div class="stars">★★★★★ <span class="score">5</span></div>
+            <button
+              type="button"
+              class="btn-favorito"
+              (click)="marcarFavorito({
+                id: '2',
+                titulo: 'La Llorona',
+                categoria: 'Leyendas Locales',
+                imagen: 'imagen/2.jpg'
+              }, $event)">
+              ❤️ Favorito
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -36,15 +62,26 @@
     <div class="lugar-box">
       <h4 class="lugar-title">Tercer lugar:</h4>
       <div class="card-misterio tarjeta-mini">
-        <img src="imagen/3.jpg" alt="Leyenda" class="card-img-mini" />
+        <img src="imagen/3.jpg" alt="El Señor del Costal" class="card-img-mini" />
         <div class="card-body-mini">
           <h3 class="titulo-leyenda-mini">el señor del costal</h3>
           <p class="texto-leyenda-mini">Cuentan en Dolores Hidalgo que cuando el viento nocturno...</p>
-          <div class="stars">★★★★★ <span class="score">5</span></div>
+          <div class="card-actions">
+            <div class="stars">★★★★★ <span class="score">5</span></div>
+            <button
+              type="button"
+              class="btn-favorito"
+              (click)="marcarFavorito({
+                id: '3',
+                titulo: 'El Señor del Costal',
+                categoria: 'Leyendas Locales',
+                imagen: 'imagen/3.jpg'
+              }, $event)">
+              ❤️ Favorito
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </section>
-
-
 </div>
