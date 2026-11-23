@@ -2,11 +2,12 @@
   <!-- Tarjeta Superior de Información del Usuario -->
   <div class="perfil-header">
     <div class="avatar-wrapper">
-      <img [src]="usuario.fotoUrl" alt="Foto de perfil" class="avatar-img" />
-      <label for="input-foto" class="btn-editar-foto" title="Cambiar foto">
-        
+      <img [src]="usuario.fotoUrl" alt="Foto de perfil" class="avatar-img" (error)="$any($event.target).src = 'imagen/logo.png'" />
+      <label *ngIf="!esPerfilAjeno" for="input-foto" class="btn-editar-foto" title="Cambiar foto">
+        📷
       </label>
       <input
+        *ngIf="!esPerfilAjeno"
         id="input-foto"
         type="file"
         accept="image/*"
@@ -25,20 +26,23 @@
           <strong>{{ misHistorias.length }}</strong>
           <span>Publicadas</span>
         </div>
-        <div class="stat">
+        <div class="stat" *ngIf="!esPerfilAjeno">
           <strong>{{ favoritos.length }}</strong>
           <span>Favoritos</span>
         </div>
-        <div class="stat">
+        <div class="stat" *ngIf="!esPerfilAjeno">
           <strong>{{ borradores.length }}</strong>
           <span>Borradores</span>
         </div>
       </div>
     </div>
 
-    <button class="btn-logout" (click)="cerrarSesion()">
+    <button *ngIf="!esPerfilAjeno" class="btn-logout" (click)="cerrarSesion()">
       Cerrar Sesión
     </button>
+    <a *ngIf="esPerfilAjeno" routerLink="/categorias" class="btn-logout" style="text-decoration: none; text-align: center;">
+      ← Volver
+    </a>
   </div>
 
   <!-- Pestañas de Navegación -->
@@ -47,15 +51,17 @@
       [class.active]="tabActiva === 'mis-historias'"
       (click)="cambiarTab('mis-historias')"
     >
-      Mis Historias ({{ misHistorias.length }})
+      {{ esPerfilAjeno ? 'Historias de ' + usuario.nombre : 'Mis Historias' }} ({{ misHistorias.length }})
     </button>
     <button
+      *ngIf="!esPerfilAjeno"
       [class.active]="tabActiva === 'favoritos'"
       (click)="cambiarTab('favoritos')"
     >
       Favoritos ({{ favoritos.length }})
     </button>
     <button
+      *ngIf="!esPerfilAjeno"
       [class.active]="tabActiva === 'borradores'"
       (click)="cambiarTab('borradores')"
     >
@@ -65,25 +71,25 @@
 
   <!-- Contenido Dinámico según Pestaña -->
   <div class="perfil-contenido">
-    <!-- 1. MIS HISTORIAS -->
+    <!-- 1. MIS HISTORIAS / HISTORIAS DEL AUTOR -->
     <div *ngIf="tabActiva === 'mis-historias'" class="grid-historias">
       <div *ngFor="let item of misHistorias" class="historia-card">
-        <img [src]="item.imagen" [alt]="item.titulo" />
+        <img [src]="item.imagen" [alt]="item.titulo" (error)="$any($event.target).src = 'fondoapp.png'" />
         <div class="card-body">
           <span class="categoria">{{ item.categoria }}</span>
           <h3>{{ item.titulo }}</h3>
-          <p class="fecha">Publicado: {{ item.fecha }}</p>
+          <p class="fecha">{{ item.fecha }}</p>
         </div>
       </div>
       <p *ngIf="misHistorias.length === 0" class="vacio">
-        Aún no has publicado ninguna historia.
+        {{ esPerfilAjeno ? 'Este autor aún no tiene historias publicadas.' : 'Aún no has publicado ninguna historia.' }}
       </p>
     </div>
 
     <!-- 2. FAVORITOS -->
-    <div *ngIf="tabActiva === 'favoritos'" class="grid-historias">
+    <div *ngIf="!esPerfilAjeno && tabActiva === 'favoritos'" class="grid-historias">
       <div *ngFor="let item of favoritos" class="historia-card">
-        <img [src]="item.imagen" [alt]="item.titulo" />
+        <img [src]="item.imagen" [alt]="item.titulo" (error)="$any($event.target).src = 'fondoapp.png'" />
         <div class="card-body">
           <span class="categoria">{{ item.categoria }}</span>
           <h3>{{ item.titulo }}</h3>
@@ -96,9 +102,9 @@
     </div>
 
     <!-- 3. BORRADORES -->
-    <div *ngIf="tabActiva === 'borradores'" class="grid-historias">
+    <div *ngIf="!esPerfilAjeno && tabActiva === 'borradores'" class="grid-historias">
       <div *ngFor="let item of borradores" class="historia-card borrador">
-        <img [src]="item.imagen" [alt]="item.titulo" />
+        <img [src]="item.imagen" [alt]="item.titulo" (error)="$any($event.target).src = 'fondoapp.png'" />
         <div class="card-body">
           <span class="categoria">{{ item.categoria }}</span>
           <h3>{{ item.titulo }}</h3>

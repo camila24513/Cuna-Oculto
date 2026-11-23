@@ -10,12 +10,27 @@
       <img src="imagen/1.jpg" alt="El Jinete del Callejón" class="card-img-main" />
       <div class="card-body">
         <h2 class="titulo-leyenda">El Jinete sin cabeza</h2>
+        <p style="font-size: 0.85rem; margin-bottom: 6px; color: #ccc;">
+          Subido por:
+          <a [routerLink]="['/perfil/autor', 'Cronista Dolorense']" style="color: #f5b301; font-weight: bold; text-decoration: underline;">
+            Cronista Dolorense
+          </a>
+        </p>
         <p class="texto-leyenda">
           Cuentan en Dolores Hidalgo que cuando el viento nocturno sopla por el centro, el eco del pasado regresa...
           Hay sombras que nunca llegaron a la cita con la historia, pero siguen rondando en la penumbra.
         </p>
         <div class="card-actions">
-          <div class="stars">★★★★★ <span class="score">5</span></div>
+          <div class="stars">
+            <span
+              *ngFor="let star of estrellas"
+              (click)="calificar('El Jinete sin cabeza', star, $event)"
+              [style.color]="star <= obtenerMiVoto('El Jinete sin cabeza') ? '#f5b301' : '#888'"
+              style="cursor: pointer; font-size: 1.3rem;">
+              ★
+            </span>
+            <span class="score" style="margin-left: 6px;">{{ obtenerPromedio('El Jinete sin cabeza') || 5 }}</span>
+          </div>
           <button
             type="button"
             class="btn-favorito"
@@ -41,9 +56,24 @@
         <img src="imagen/1.jpg" alt="La Llorona" class="card-img-mini" />
         <div class="card-body-mini">
           <h3 class="titulo-leyenda-mini">la llorona</h3>
+          <p style="font-size: 0.8rem; margin-bottom: 4px; color: #ccc;">
+            Subido por:
+            <a [routerLink]="['/perfil/autor', 'Archivo Histórico']" style="color: #f5b301; font-weight: bold; text-decoration: underline;">
+              Archivo Histórico
+            </a>
+          </p>
           <p class="texto-leyenda-mini">Cuentan en Dolores Hidalgo que cuando el viento nocturno...</p>
           <div class="card-actions">
-            <div class="stars">★★★★★ <span class="score">5</span></div>
+            <div class="stars">
+              <span
+                *ngFor="let star of estrellas"
+                (click)="calificar('La Llorona', star, $event)"
+                [style.color]="star <= obtenerMiVoto('La Llorona') ? '#f5b301' : '#888'"
+                style="cursor: pointer; font-size: 1.2rem;">
+                ★
+              </span>
+              <span class="score" style="margin-left: 4px;">{{ obtenerPromedio('La Llorona') || 5 }}</span>
+            </div>
             <button
               type="button"
               class="btn-favorito"
@@ -67,9 +97,24 @@
         <img src="imagen/3.jpg" alt="El Señor del Costal" class="card-img-mini" />
         <div class="card-body-mini">
           <h3 class="titulo-leyenda-mini">el señor del costal</h3>
+          <p style="font-size: 0.8rem; margin-bottom: 4px; color: #ccc;">
+            Subido por:
+            <a [routerLink]="['/perfil/autor', 'Cronista Dolorense']" style="color: #f5b301; font-weight: bold; text-decoration: underline;">
+              Cronista Dolorense
+            </a>
+          </p>
           <p class="texto-leyenda-mini">Cuentan en Dolores Hidalgo que cuando el viento nocturno...</p>
           <div class="card-actions">
-            <div class="stars">★★★★★ <span class="score">5</span></div>
+            <div class="stars">
+              <span
+                *ngFor="let star of estrellas"
+                (click)="calificar('El Señor del Costal', star, $event)"
+                [style.color]="star <= obtenerMiVoto('El Señor del Costal') ? '#f5b301' : '#888'"
+                style="cursor: pointer; font-size: 1.2rem;">
+                ★
+              </span>
+              <span class="score" style="margin-left: 4px;">{{ obtenerPromedio('El Señor del Costal') || 5 }}</span>
+            </div>
             <button
               type="button"
               class="btn-favorito"
