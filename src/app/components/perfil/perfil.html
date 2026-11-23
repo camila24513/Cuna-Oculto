@@ -73,6 +73,9 @@
           <span class="categoria">{{ item.categoria }}</span>
           <h3>{{ item.titulo }}</h3>
           <p class="fecha">Publicado: {{ item.fecha }}</p>
+          <button class="btn-eliminar" (click)="eliminarHistoria(item.id)">
+            Eliminar
+          </button>
         </div>
       </div>
       <p *ngIf="misHistorias.length === 0" class="vacio">

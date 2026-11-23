@@ -84,4 +84,10 @@ export class PerfilComponent implements OnInit {
     localStorage.removeItem('usuario_activo');
     this.router.navigate(['/login']);
   }
+  eliminarHistoria(id: number): void {
+    if (confirm('¿Estás seguro de que quieres eliminar esta historia?')) {
+      this.historiasService.eliminarPublicada(id);
+      this.misHistorias = this.historiasService.obtenerPublicadas();
+    }
+  }
 }

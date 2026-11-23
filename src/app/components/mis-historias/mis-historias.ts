@@ -109,10 +109,11 @@ export class MisHistoriasComponent implements OnInit, OnDestroy {
   }
 
   // Convierte la imagen seleccionada a Base64 para poder mostrarla en el Perfil
-  private convertirImagenABase64(file: File): void {
+private convertirImagenABase64(file: File): void {
     const reader = new FileReader();
     reader.onload = (e) => {
       this.imagenBase64 = e.target?.result as string;
+      this.cdr.detectChanges(); // <-- Agrega esta línea
     };
     reader.readAsDataURL(file);
   }

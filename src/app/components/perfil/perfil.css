@@ -1,8 +1,18 @@
 .perfil-container {
   max-width: 1000px;
-  margin: 0 auto;
+  width: calc(100% - 290px);
+  /* Calcula el centro exacto restando los 250px del menú lateral */
+  margin-left: max(270px, calc(50% - 500px + 125px));
+  margin-right: auto;
   padding: 24px;
   font-family: inherit;
+}
+
+@media (max-width: 768px) {
+  .perfil-container {
+    width: 100%;
+    margin: 0 auto;
+  }
 }
 
 .perfil-header {
@@ -191,4 +201,23 @@
 .vacio {
   color: #64748b;
   font-style: italic;
+}
+.btn-eliminar {
+  margin-top: 12px;
+  width: 100%;
+  padding: 8px;
+  background-color: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-eliminar:hover {
+  background-color: #e63946;
+  color: #ffffff;
+  border-color: #e63946;
 }

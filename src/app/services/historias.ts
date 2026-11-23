@@ -69,6 +69,11 @@ export class HistoriasService {
     }
   }
 
+  eliminarPublicada(id: number): void {
+    const lista = this.obtenerPublicadas().filter(h => h.id !== id);
+    localStorage.setItem(this.KEY_PUBLICADAS, JSON.stringify(lista));
+  }
+
   // --- BORRADORES (HISTORIAS SIN TERMINAR) ---
   obtenerBorradores(): HistoriaItem[] {
     return JSON.parse(localStorage.getItem(this.KEY_BORRADORES) || '[]');

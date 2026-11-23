@@ -2,13 +2,23 @@
   padding: 20px;
   color: #ffffff;
   max-width: 1100px;
-  margin: 0 auto;
+  width: calc(100% - 290px);
+  /* Centra el bloque en el espacio libre a la derecha del menú lateral (250px) */
+  margin-left: max(270px, calc(50% - 550px + 125px));
+  margin-right: auto;
 
   background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), url('/fondoapp.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 16px;
+}
+
+@media (max-width: 768px) {
+  .contenedor-principal {
+    width: 100%;
+    margin: 0 auto;
+  }
 }
 
 .titulo-seccion {
