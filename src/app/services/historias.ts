@@ -18,6 +18,7 @@ export class HistoriasService {
   private readonly KEY_BORRADORES = 'cuna_borradores';
   private readonly KEY_FAVORITOS = 'cuna_favoritos';
   private readonly KEY_FOTO = 'cuna_foto_perfil';
+  private readonly KEY_CALIFICACIONES = 'cuna_calificaciones';
 
   constructor() {
     this.inicializarDatosPorDefecto();
@@ -52,6 +53,10 @@ export class HistoriasService {
     return JSON.parse(localStorage.getItem(this.KEY_PUBLICADAS) || '[]');
   }
 
+  obtenerTodasLasLeyendas(): HistoriaItem[] {
+    return this.obtenerPublicadas();
+  }
+
   publicarHistoria(historia: Omit<HistoriaItem, 'id' | 'fecha'>, borradorId?: number): void {
     const lista = this.obtenerPublicadas();
     const nueva: HistoriaItem = {
@@ -60,10 +65,9 @@ export class HistoriasService {
       fecha: new Date().toLocaleDateString('es-MX', { day: '2-digit', month: 'short', year: 'numeric' }),
       imagen: historia.imagen || 'fondoapp.png'
     };
-    lista.unshift(nueva); // Agrega al principio
+    lista.unshift(nueva);
     localStorage.setItem(this.KEY_PUBLICADAS, JSON.stringify(lista));
 
-    // Si venía de un borrador, lo eliminamos de borradores
     if (borradorId) {
       this.eliminarBorrador(borradorId);
     }
@@ -74,7 +78,7 @@ export class HistoriasService {
     localStorage.setItem(this.KEY_PUBLICADAS, JSON.stringify(lista));
   }
 
-  // --- BORRADORES (HISTORIAS SIN TERMINAR) ---
+  // --- BORRADORES ---
   obtenerBorradores(): HistoriaItem[] {
     return JSON.parse(localStorage.getItem(this.KEY_BORRADORES) || '[]');
   }
@@ -119,11 +123,45 @@ export class HistoriasService {
     if (existe) {
       lista = lista.filter(h => h.id !== historia.id);
       localStorage.setItem(this.KEY_FAVORITOS, JSON.stringify(lista));
-      return false; // Se quitó de favoritos
+      return false;
     } else {
       lista.unshift(historia);
       localStorage.setItem(this.KEY_FAVORITOS, JSON.stringify(lista));
-      return true; // Se agregó a favoritos
+      return true;
     }
+  }
+
+  // --- CALIFICACIONES (ESTRELLAS DE HOME Y LISTADO) ---
+  calificarHistoria(titulo: string, puntos: number): void {
+    const data = JSON.parse(localStorage.getItem(this.KEY_CALIFICACIONES) || '{}');
+    if (!data[titulo]) {
+      data[titulo] = { totalPuntos: 0, cantidadVotos: 0, miVoto: 0 };
+    }
+    const votoAnterior = data[titulo].miVoto || 0;
+    if (votoAnterior > 0) {
+      data[titulo].totalPuntos = data[titulo].totalPuntos - votoAnterior + puntos;
+    } else {
+      data[titulo].totalPuntos += puntos;
+      data[titulo].cantidadVotos += 1;
+    }
+    data[titulo].miVoto = puntos;
+    localStorage.setItem(this.KEY_CALIFICACIONES, JSON.stringify(data));
+  }
+
+  obtenerMiVoto(titulo: string): number {
+    const data = JSON.parse(localStorage.getItem(this.KEY_CALIFICACIONES) || '{}');
+    return data[titulo]?.miVoto || 0;
+  }
+
+  obtenerStatsCalificacion(titulo: string): { promedio: number; total: number } {
+    const data = JSON.parse(localStorage.getItem(this.KEY_CALIFICACIONES) || '{}');
+    const info = data[titulo];
+    if (!info || info.cantidadVotos === 0) {
+      return { promedio: 0, total: 0 };
+    }
+    return {
+      promedio: Number((info.totalPuntos / info.cantidadVotos).toFixed(1)),
+      total: info.cantidadVotos
+    };
   }
 }
