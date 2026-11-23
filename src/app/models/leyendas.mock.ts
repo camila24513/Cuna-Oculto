@@ -242,14 +242,14 @@ export const LEYENDAS_MOCK: Leyenda[] = [
   {
     titulo: 'La campana que sonó sin cordel',
     descripcion: 'En 1910, durante trabajos de remodelación sin campaneros ni cuerdas, las campanas repicaron solas a mediodía presagiando buenas cosechas.',
-    imagen: 'assets/fondo-patron.png',
+    imagen: 'assets/cordel.png',
     categoria: 'Sucesos Inexplicables',
     ubicacion: 'Templo del Señor del Salitre'
   },
   {
     titulo: 'El reloj detenido del Museo de la Independencia',
     descripcion: 'El reloj de la antigua cárcel se detiene de forma inexplicable siempre a las 2:30 AM, hora exacta en que Hidalgo liberó a los presos.',
-    imagen: 'assets/fondo-patron.png',
+    imagen: 'assets/Independencia.png',
     categoria: 'Sucesos Inexplicables',
     ubicacion: 'Museo de la Independencia Nacional'
   },
@@ -258,7 +258,7 @@ export const LEYENDAS_MOCK: Leyenda[] = [
   {
     titulo: 'El mezquite de los juramentos',
     descripcion: 'Un enorme mezquite de trescientos años donde los pactos de lealtad, amor o amistad hechos al tocar su tronco se vuelven indestructibles.',
-    imagen: 'assets/fondo-patron.png',
+    imagen: 'assets/juramentos.png',
     categoria: 'Historias Rurales y del Campo',
     ubicacion: 'Llanos de la comunidad de El Llanito'
   },
@@ -272,7 +272,7 @@ export const LEYENDAS_MOCK: Leyenda[] = [
   {
     titulo: 'El silbato del viento en la Sierra de la Xonotla',
     descripcion: 'Ráfagas de aire en los cañones emiten un sonido similar a silbatos prehispánicos atribuidos a antiguos pobladores chichimecas.',
-    imagen: 'assets/fondo-patron.png',
+    imagen: 'assets/Xonotla.png',
     categoria: 'Historias Rurales y del Campo',
     ubicacion: 'Sierra de la Xonotla'
   },
@@ -281,21 +281,21 @@ export const LEYENDAS_MOCK: Leyenda[] = [
   {
     titulo: 'Las mulas de plata del lecho del Río Batán',
     descripcion: 'Un resplandor plateado bajo la arena seca del río revela un convoy de plata hundido que solo se mostrará a quien busque hacer caridad.',
-    imagen: 'assets/fondo-patron.png',
+    imagen: 'assets/Río-Batán.png',
     categoria: 'Tesoros Ocultos y En entierros',
     ubicacion: 'Cauce del Río Batán'
   },
   {
     titulo: 'El entierro del Callejón de las Ánimas',
     descripcion: 'El espíritu de un anciano en casaca colonial se aparecía señalando una chimenea donde se descubrió una botija de barro repleta de reales.',
-    imagen: 'assets/fondo-patron.png',
+    imagen: 'assets/Ánimas.png',
     categoria: 'Tesoros Ocultos y En entierros',
     ubicacion: 'Callejón cercano al Centro Histórico'
   },
   {
     titulo: 'La luz del pozo seco de la Hacienda de Trancas',
     descripcion: 'Una flama azulada sobre un pozo señala un entierro de dinero antiguo que se hundirá más si no se extrae en total silencio.',
-    imagen: 'assets/fondo-patron.png',
+    imagen: 'assets/Trancas.png',
     categoria: 'Tesoros Ocultos y En entierros',
     ubicacion: 'Antigua Hacienda de Trancas'
   },
@@ -304,21 +304,21 @@ export const LEYENDAS_MOCK: Leyenda[] = [
   {
     titulo: 'El manantial del diablo en la sierra',
     descripcion: 'Un hilo de agua helada producto de un trato oscuro que se convierte en fango instantáneamente si alguien intenta comerciar con ella.',
-    imagen: 'assets/fondo-patron.png',
+    imagen: 'assets/sierra.png',
     categoria: 'Pactos y Maldiciones',
     ubicacion: 'Paraje cercano a las colinas occidentales'
   },
   {
     titulo: 'La sombra del jugador de naipes',
     descripcion: 'En una vieja casa de juego clandestina resuena a medianoche el crujido del barajeo de cartas de un sujeto que apostó su alma.',
-    imagen: 'assets/fondo-patron.png',
+    imagen: 'assets/naipes.png',
     categoria: 'Pactos y Maldiciones',
     ubicacion: 'Antiguo pasaje comercial cerca de la plaza de armas'
   },
   {
     titulo: 'La maldición de la joya de la Novia',
     descripcion: 'Un collar de granates que se rompió en el altar y carga con la lección de la honestidad: quien lo posea sin amor sincero sufrirá desamores.',
-    imagen: 'assets/fondo-patron.png',
+    imagen: 'assets/Novia.png',
     categoria: 'Parroquia de la Asunción'
   }
 ];
