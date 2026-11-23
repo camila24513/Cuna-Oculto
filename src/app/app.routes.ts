@@ -24,5 +24,9 @@ export const routes: Routes = [
     path: 'perfil',
     loadComponent: () => import('./components/perfil/perfil').then(m => m.PerfilComponent)
   },
+  {
+    path: 'perfil/autor/:nombre',
+    loadComponent: () => import('./components/perfil/perfil').then(m => m.PerfilComponent)
+  },
   { path: '**', redirectTo: 'home' }
 ];

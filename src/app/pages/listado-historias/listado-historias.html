@@ -1,12 +1,10 @@
 <div class="historias-container">
   <div class="main-content">
-    <!-- Encabezado y Buscador (AHORA ARRIBA) -->
     <div class="header-section">
       <a routerLink="/categorias" class="btn-back">
         ← {{ esMisHistorias ? 'MIS HISTORIAS' : (categoriaSeleccionada || 'TODAS LAS HISTORIAS') }}
       </a>
 
-      <!-- Botón para ir a registrar historia (solo visible dentro de categorías) -->
       <div class="acciones-header" *ngIf="!esMisHistorias">
         <a routerLink="/mis-historias" class="btn-registrar">
           + Publicar Historia
@@ -22,17 +20,51 @@
       </div>
     </div>
 
-    <!-- Lista de Historias Filtradas: SOLO se muestra si NO estamos en Mis Historias -->
     <ng-container *ngIf="!esMisHistorias">
       <div class="grid-historias" *ngIf="leyendasFiltradas.length > 0; else sinResultados">
-        <div *ngFor="let leyenda of leyendasFiltradas" class="card-historia">
+        <div *ngFor="let leyenda of leyendasFiltradas" class="card-historia" style="height: auto; display: flex; flex-direction: column;">
           <div class="img-wrapper">
             <img [src]="leyenda.imagen" [alt]="leyenda.titulo" (error)="$any($event.target).src = 'imagen/fondo.jpg'" />
           </div>
-          <div class="card-info">
-            <h3>{{ leyenda.titulo }}</h3>
-            <p>{{ leyenda.descripcion }}</p>
-            <span class="badge-cat" *ngIf="leyenda.categoria">{{ leyenda.categoria }}</span>
+          <div class="card-info" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <h3>{{ leyenda.titulo }}</h3>
+
+              <p class="autor-link" style="font-size: 0.85rem; margin-bottom: 6px; color: #ccc;">
+                Subido por:
+                <a [routerLink]="['/perfil/autor', leyenda.autor || 'Cronista Dolorense']"
+                   style="color: #f5b301; font-weight: bold; text-decoration: underline; cursor: pointer;">
+                  {{ leyenda.autor || 'Cronista Dolorense' }}
+                </a>
+              </p>
+
+              <p>{{ leyenda.descripcion }}</p>
+              <span class="badge-cat" *ngIf="leyenda.categoria">{{ leyenda.categoria }}</span>
+            </div>
+
+            <!-- Barra inferior con Estrellas y Botón Favorito bien visible -->
+            <div class="calificacion-box" style="margin-top: 14px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;">
+              <div>
+                <span
+                  *ngFor="let star of estrellas"
+                  (click)="calificar(leyenda, star)"
+                  [style.color]="star <= obtenerMiVoto(leyenda.titulo) ? '#f5b301' : '#888'"
+                  style="font-size: 1.35rem; cursor: pointer; margin-right: 2px;"
+                  title="Calificar con {{ star }} estrellas">
+                  ★
+                </span>
+                <span style="font-size: 0.85rem; color: #ddd; margin-left: 4px;">
+                  {{ leyenda.calificacionPromedio || 0 }} ({{ leyenda.totalVotos || 0 }})
+                </span>
+              </div>
+
+              <button
+                type="button"
+                (click)="marcarFavorito(leyenda)"
+                style="background: rgba(255, 255, 255, 0.12); color: #fff; border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 20px; padding: 5px 12px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">
+                ❤️ Favorito
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -43,6 +75,5 @@
         </div>
       </ng-template>
     </ng-container>
-
   </div>
 </div>

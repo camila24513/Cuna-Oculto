@@ -5,6 +5,9 @@ export interface Leyenda {
   imagen: string;
   categoria: string;
   ubicacion?: string;
+  autor?: string;
+  calificacionPromedio?: number;
+  totalVotos?: number;
   // Campos utilizados en HomeComponent
   rank?: number;
   votos?: number;
@@ -12,5 +15,4 @@ export interface Leyenda {
   imagenUrl?: string;
 }
 
-// Re-exportamos los datos MOCK para mantener compatibilidad con HomeComponent
 export { LEYENDAS_MOCK } from './leyendas.mock';
