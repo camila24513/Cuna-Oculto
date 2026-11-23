@@ -1,18 +1,58 @@
 <div class="categorias-container">
   <div class="main-content">
+
+    <!-- Tu cuadrícula original con el evento (click) conectado -->
     <div class="categories-grid">
-      <div *ngFor="let cat of categorias" class="category-card">
+      <div *ngFor="let cat of categorias"
+          class="category-card"
+          [class.activa]="categoriaSeleccionada === cat.titulo"
+          (click)="seleccionarCategoria(cat.titulo)">
+
         <div class="card-image">
           <img [src]="cat.imagen" [alt]="cat.titulo" (error)="$any($event.target).src = 'assets/fondo-patron.png'" />
         </div>
+
         <div class="card-content">
           <h3>{{ cat.titulo }}</h3>
           <p>{{ cat.descripcion }}</p>
-          <a [routerLink]="['/categorias', cat.titulo]" class="btn-action">
+
+          <!-- $event.stopPropagation() evita que al dar clic en la flecha se dispare también el filtro -->
+          <a [routerLink]="['/categorias', cat.titulo]"
+          (click)="$event.stopPropagation()"
+          class="btn-action">
             →
           </a>
         </div>
       </div>
     </div>
+
+    <!-- Sección desplegable de historias de la categoría seleccionada -->
+    <div class="historias-lista" *ngIf="categoriaSeleccionada">
+      <h3 class="subtitulo-categoria">Relatos en: {{ categoriaSeleccionada }}</h3>
+
+      <div class="grid-historias" *ngIf="historiasFiltradas.length > 0; else sinHistorias">
+        <div class="card-misterio historia-item" *ngFor="let historia of historiasFiltradas">
+          <img [src]="historia.imagen"
+              [alt]="historia.titulo"
+              class="historia-img"
+              (error)="$any($event.target).src = 'assets/fondo-patron.png'" />
+
+          <div class="historia-info">
+            <h4>{{ historia.titulo }}</h4>
+            <p>{{ historia.descripcion }}</p>
+
+          <button type="button" class="btn-favorito" (click)="marcarFavorito(historia)">
+  ❤️ Favorito
+</button>>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mensaje por si haces clic en una categoría que aún no tiene historias de prueba -->
+      <ng-template #sinHistorias>
+        <p class="mensaje-vacio">Aún no hay relatos registrados en esta categoría.</p>
+      </ng-template>
+    </div>
+
   </div>
 </div>
