@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Leyenda } from '../../models/leyenda.model';
 import { LEYENDAS_MOCK } from '../../models/leyendas.mock';
+import { HistoriasService } from '../../services/historias'; // <-- 1. Faltaba este import
 
 @Component({
   selector: 'app-listado-historias',
@@ -18,7 +19,11 @@ export class ListadoHistoriasComponent implements OnInit {
   historiasBase: Leyenda[] = [];
   esMisHistorias: boolean = false;
 
-  constructor(private route: ActivatedRoute) {}
+  // 2. Faltaba agregar ", private historiasService: HistoriasService" aquí adentro
+  constructor(
+    private route: ActivatedRoute,
+    private historiasService: HistoriasService
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -26,6 +31,16 @@ export class ListadoHistoriasComponent implements OnInit {
       this.categoriaSeleccionada = cat ? decodeURIComponent(cat).trim() : '';
       this.esMisHistorias = false;
       this.cargarHistorias();
+    });
+  }
+
+  marcarFavorito(historia: any): void {
+    this.historiasService.toggleFavorito({
+      id: historia.id,
+      titulo: historia.titulo,
+      categoria: historia.categoria,
+      fecha: historia.fecha || 'Hoy',
+      imagen: historia.imagen
     });
   }
 
@@ -45,8 +60,8 @@ export class ListadoHistoriasComponent implements OnInit {
       return this.historiasBase;
     }
     const busqueda = this.textoBusqueda.toLowerCase();
-    return this.historiasBase.filter(h => 
-      h.titulo.toLowerCase().includes(busqueda) || 
+    return this.historiasBase.filter(h =>
+      h.titulo.toLowerCase().includes(busqueda) ||
       (h.descripcion && h.descripcion.toLowerCase().includes(busqueda))
     );
   }
