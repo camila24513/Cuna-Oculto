@@ -12,9 +12,9 @@ import { HistoriasService, HistoriaItem } from '../../services/historias';
 })
 export class PerfilComponent implements OnInit {
   usuario = {
-    nombre: 'Giselle',
-    correo: 'giselle@cunaoculto.mx',
-    rol: 'Narradora Dolorense',
+    nombre: '',
+    correo: '',
+    rol: 'Narrador Dolorense',
     fotoUrl: 'imagen/avatar-default.png'
   };
 
@@ -35,17 +35,23 @@ export class PerfilComponent implements OnInit {
   }
 
   cargarDatosPerfil(): void {
-    // 1. Leemos el usuario que inició sesión o se registró
     const usuarioGuardado = localStorage.getItem('usuario_activo');
-    if (usuarioGuardado) {
-      const datos = JSON.parse(usuarioGuardado);
-      this.usuario.nombre = datos.nombre || 'Usuario';
-      this.usuario.correo = datos.correo || 'usuario@cunaoculto.mx';
-      this.usuario.rol = datos.rol || 'Narrador Dolorense';
+
+    // no hay sesión iniciada
+    if (!usuarioGuardado) {
+      this.router.navigate(['/login']);
+      return;
     }
 
-    // 2. Cargamos su foto y sus historias
-    this.usuario.fotoUrl = this.historiasService.obtenerFotoPerfil();
+    const datos = JSON.parse(usuarioGuardado);
+    this.usuario.nombre = datos.nombre;
+    this.usuario.correo = datos.correo;
+    this.usuario.rol = datos.rol || 'Narrador Dolorense';
+
+    // Carga la foto específica de ESTE correo 
+    const fotoPropia = localStorage.getItem('foto_perfil_' + this.usuario.correo);
+    this.usuario.fotoUrl = fotoPropia ? fotoPropia : 'imagen/avatar-default.png';
+
     this.misHistorias = this.historiasService.obtenerPublicadas();
     this.favoritos = this.historiasService.obtenerFavoritos();
     this.borradores = this.historiasService.obtenerBorradores();
@@ -55,7 +61,6 @@ export class PerfilComponent implements OnInit {
     this.tabActiva = tab;
   }
 
-  // Actualiza la foto al instante y la guarda en localStorage
   onSeleccionarFoto(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
@@ -63,8 +68,9 @@ export class PerfilComponent implements OnInit {
       reader.onload = (e) => {
         const nuevaFoto = e.target?.result as string;
         this.usuario.fotoUrl = nuevaFoto;
-        this.historiasService.guardarFotoPerfil(nuevaFoto);
-        this.cdr.detectChanges(); // <--- Fuerza actualización visual inmediata
+        // Guardamos la foto 
+        localStorage.setItem('foto_perfil_' + this.usuario.correo, nuevaFoto);
+        this.cdr.detectChanges();
       };
       reader.readAsDataURL(input.files[0]);
     }
