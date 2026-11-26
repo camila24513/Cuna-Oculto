@@ -1,12 +1,11 @@
 <div class="historias-container">
   <div class="main-content">
-    <!-- Encabezado y Buscador (AHORA ARRIBA) -->
+    <!-- Encabezado y Buscador -->
     <div class="header-section">
       <a routerLink="/categorias" class="btn-back">
         ← {{ esMisHistorias ? 'MIS HISTORIAS' : (categoriaSeleccionada || 'TODAS LAS HISTORIAS') }}
       </a>
 
-      <!-- Botón para ir a registrar historia (solo visible dentro de categorías) -->
       <div class="acciones-header" *ngIf="!esMisHistorias">
         <a routerLink="/mis-historias" class="btn-registrar">
           + Publicar Historia
@@ -22,7 +21,7 @@
       </div>
     </div>
 
-    <!-- Lista de Historias Filtradas: SOLO se muestra si NO estamos en Mis Historias -->
+    <!-- Lista de Historias Filtradas -->
     <ng-container *ngIf="!esMisHistorias">
       <div class="grid-historias" *ngIf="leyendasFiltradas.length > 0; else sinResultados">
         <div *ngFor="let leyenda of leyendasFiltradas" class="card-historia">
@@ -33,6 +32,19 @@
             <h3>{{ leyenda.titulo }}</h3>
             <p>{{ leyenda.descripcion }}</p>
             <span class="badge-cat" *ngIf="leyenda.categoria">{{ leyenda.categoria }}</span>
+
+            <!-- Controles de Audio (Reproducir, Pausa y Detener) -->
+            <div class="audio-controls">
+              <button (click)="reproducirVoz(leyenda)" class="btn-audio play" title="Reproducir">
+                ▶️ Reproducir
+              </button>
+              <button (click)="pausarVoz()" class="btn-audio pause" title="Pausar">
+                ⏸️ Pausa
+              </button>
+              <button (click)="detenerVoz()" class="btn-audio stop" title="Detener y reiniciar">
+                ⏹️ Detener
+              </button>
+            </div>
           </div>
         </div>
       </div>

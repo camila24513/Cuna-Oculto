@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -12,11 +12,14 @@ import { LEYENDAS_MOCK } from '../../models/leyendas.mock';
   templateUrl: './listado-historias.html',
   styleUrls: ['./listado-historias.css']
 })
-export class ListadoHistoriasComponent implements OnInit {
+export class ListadoHistoriasComponent implements OnInit, OnDestroy {
   categoriaSeleccionada: string = '';
   textoBusqueda: string = '';
   historiasBase: Leyenda[] = [];
   esMisHistorias: boolean = false;
+  
+  private utterance: SpeechSynthesisUtterance | null = null;
+  public historiaReproduciendo: string | null = null;
 
   constructor(private route: ActivatedRoute) {}
 
@@ -27,6 +30,10 @@ export class ListadoHistoriasComponent implements OnInit {
       this.esMisHistorias = false;
       this.cargarHistorias();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.detenerVoz();
   }
 
   cargarHistorias(): void {
@@ -49,5 +56,40 @@ export class ListadoHistoriasComponent implements OnInit {
       h.titulo.toLowerCase().includes(busqueda) || 
       (h.descripcion && h.descripcion.toLowerCase().includes(busqueda))
     );
+  }
+
+  // Métodos de control de audio / voz
+  reproducirVoz(leyenda: Leyenda): void {
+    if (!('speechSynthesis' in window)) return;
+
+    if (window.speechSynthesis.paused && this.historiaReproduciendo === leyenda.titulo) {
+      window.speechSynthesis.resume();
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    this.utterance = new SpeechSynthesisUtterance(`${leyenda.titulo}. ${leyenda.descripcion}`);
+    this.utterance.lang = 'es-MX';
+    
+    this.utterance.onend = () => {
+      this.historiaReproduciendo = null;
+    };
+
+    this.historiaReproduciendo = leyenda.titulo;
+    window.speechSynthesis.speak(this.utterance);
+  }
+
+  pausarVoz(): void {
+    if ('speechSynthesis' in window && window.speechSynthesis.speaking) {
+      window.speechSynthesis.pause();
+    }
+  }
+
+  detenerVoz(): void {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      this.historiaReproduciendo = null;
+    }
   }
 }
